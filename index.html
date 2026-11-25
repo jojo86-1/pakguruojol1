@@ -1,0 +1,1959 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Zat Adiktif - Media Pembelajaran & Evaluasi Interaktif</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts: Fredoka (untuk judul infografis ceria) & Plus Jakarta Sans (untuk teks jelas) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            display: ['Fredoka', 'sans-serif'],
+            sans: ['Plus Jakarta Sans', 'sans-serif'],
+          },
+          colors: {
+            pastelCream: '#FAF8F2',
+            pastelBlue: '#E8F3FC',
+            pastelTeal: '#E3F5F1',
+            pastelYellow: '#FEF6DF',
+            pastelPink: '#FCEBF0',
+            pastelPurple: '#F1ECFA',
+            pastelOrange: '#FFF0E3',
+            shopeeOrange: '#EE4D2D',
+            shopeeLight: '#FF7337',
+          }
+        }
+      }
+    };
+  </script>
+
+  <style>
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: #FAF8F2;
+      background-image: 
+        radial-gradient(circle at 10% 15%, rgba(167, 215, 197, 0.25) 0%, transparent 35%),
+        radial-gradient(circle at 90% 10%, rgba(174, 209, 240, 0.28) 0%, transparent 40%),
+        radial-gradient(circle at 85% 85%, rgba(253, 219, 179, 0.25) 0%, transparent 40%);
+      color: #1E293B;
+      overflow-x: hidden;
+    }
+
+    h1, h2, h3, .font-comic {
+      font-family: 'Fredoka', sans-serif;
+    }
+
+    /* Animasi Halus */
+    @keyframes floatSlow {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-7px); }
+    }
+    .animate-float {
+      animation: floatSlow 3.5s ease-in-out infinite;
+    }
+
+    @keyframes pulseDanger {
+      0%, 100% { background-color: #DC2626; }
+      50% { background-color: #991B1B; }
+    }
+    .animate-danger-bg {
+      animation: pulseDanger 0.8s infinite;
+    }
+
+    @keyframes popIn {
+      0% { opacity: 0; transform: scale(0.92) translateY(10px); }
+      100% { opacity: 1; transform: scale(1) translateY(0); }
+    }
+    .animate-pop {
+      animation: popIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    /* Konfeti & Partikel */
+    .confetti-piece {
+      position: fixed;
+      top: -20px;
+      z-index: 60;
+      pointer-events: none;
+      animation: fallDown linear forwards;
+    }
+    @keyframes fallDown {
+      to {
+        transform: translateY(105vh) rotate(720deg);
+      }
+    }
+
+    /* Custom Scrollbar untuk Navigasi Slide */
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+
+    /* Bingkai Putus-putus ala Infografis */
+    .dashed-box {
+      border: 2.5px dashed #64748B;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+  <!-- ========================================================= -->
+  <!-- HEADER / NAVBAR UTAMA                                     -->
+  <!-- ========================================================= -->
+  <header class="sticky top-0 z-40 bg-white/90 backdrop-blur-md border-b border-slate-200/80 shadow-sm">
+    <div class="max-w-5xl mx-auto px-4 py-3 flex flex-wrap items-center justify-between gap-3">
+      <!-- Logo & Judul -->
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-2xl bg-gradient-to-br from-teal-500 to-blue-600 flex items-center justify-center text-white shadow-md">
+          <!-- Ikon Otak & Kimia SVG -->
+          <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+            <path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96.44 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 1.98-3A2.5 2.5 0 0 1 9.5 2Z"/>
+            <path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96.44 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24 2.5 2.5 0 0 0-1.98-3A2.5 2.5 0 0 0 14.5 2Z"/>
+          </svg>
+        </div>
+        <div>
+          <h1 class="text-lg sm:text-xl font-bold text-slate-800 tracking-tight leading-none">ZAT ADIKTIF</h1>
+          <p class="text-xs text-slate-500 font-medium mt-0.5">IPA SMP • Modul Infografis & Evaluasi HOTS</p>
+        </div>
+      </div>
+
+      <!-- Tombol Navigasi Utama (Tab Materi vs Tab Kuis) -->
+      <nav id="mainNav" class="flex items-center gap-2 bg-slate-100 p-1.5 rounded-2xl">
+        <button id="btnTabMateri" onclick="switchMainTab('materi')" class="px-4 py-2 rounded-xl text-sm font-bold transition-all bg-white text-teal-700 shadow-sm flex items-center gap-1.5">
+          <span>📚</span> Materi (10 Slide)
+        </button>
+        <button id="btnTabKuis" onclick="switchMainTab('kuis')" class="px-4 py-2 rounded-xl text-sm font-bold transition-all text-slate-600 hover:text-slate-900 flex items-center gap-1.5">
+          <span>📝</span> Evaluasi HOTS
+        </button>
+      </nav>
+
+      <!-- Timer Aktif (Muncul Hanya Saat Kuis Berlangsung) -->
+      <div id="examTimerBadge" class="hidden items-center gap-2 bg-red-50 border-2 border-red-500 text-red-700 px-3.5 py-1.5 rounded-2xl shadow-sm">
+        <span class="relative flex h-3 w-3">
+          <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
+          <span class="relative inline-flex rounded-full h-3 w-3 bg-red-600"></span>
+        </span>
+        <span class="text-xs font-bold uppercase tracking-wider hidden sm:inline">Sisa Waktu:</span>
+        <span id="timerDisplay" class="font-mono text-base sm:text-lg font-extrabold">07:00</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- ========================================================= -->
+  <!-- KONTEN UTAMA                                              -->
+  <!-- ========================================================= -->
+  <main class="flex-1 max-w-5xl w-full mx-auto px-4 py-6">
+
+    <!-- ======================================================= -->
+    <!-- BAGIAN 1: MATERI LENGKAP (10 SLIDE SESUAI 10 GAMBAR)    -->
+    <!-- ======================================================= -->
+    <section id="sectionMateri" class="space-y-5">
+      <!-- Navigasi Pill 1-10 Slide -->
+      <div class="bg-white/90 rounded-2xl p-3 border border-slate-200/80 shadow-sm">
+        <div class="flex items-center justify-between mb-2 px-1">
+          <span class="text-xs font-bold uppercase tracking-wider text-teal-700">Pilih Halaman Infografis:</span>
+          <span id="slideIndicatorText" class="text-xs font-bold text-slate-500">Halaman 1 dari 10</span>
+        </div>
+        <div id="slidePills" class="flex items-center gap-2 overflow-x-auto no-scrollbar pb-1">
+          <!-- Diisi otomatis via JavaScript -->
+        </div>
+      </div>
+
+      <!-- Wadah Konten Slide Infografis -->
+      <div id="slideContainer" class="bg-white rounded-3xl border-2 border-slate-200/90 shadow-lg p-5 sm:p-8 min-h-[520px] relative overflow-hidden animate-pop">
+        <!-- Konten Slide Aktif dirender oleh JS -->
+      </div>
+
+      <!-- Tombol Navigasi Bawah Slide (Sebelumnya / Selanjutnya / Lanjut Kuis) -->
+      <div class="flex items-center justify-between gap-3 pt-1">
+        <button id="btnPrevSlide" onclick="changeSlide(-1)" class="px-5 py-3 rounded-2xl bg-white border-2 border-slate-200 text-slate-700 font-bold text-sm hover:bg-slate-50 disabled:opacity-40 disabled:cursor-not-allowed transition flex items-center gap-2 shadow-sm">
+          <span>⬅️</span> Sebelumnya
+        </button>
+
+        <button id="btnNextSlide" onclick="changeSlide(1)" class="px-6 py-3 rounded-2xl bg-gradient-to-r from-teal-600 to-blue-600 text-white font-bold text-sm hover:opacity-95 transition flex items-center gap-2 shadow-md">
+          <span>Selanjutnya</span> <span>➡️</span>
+        </button>
+
+        <button id="btnStartQuizFromMateri" onclick="switchMainTab('kuis')" class="hidden px-6 py-3 rounded-2xl bg-gradient-to-r from-orange-500 to-red-500 text-white font-bold text-sm hover:opacity-95 transition flex items-center gap-2 shadow-md animate-bounce">
+          <span>🚀</span> Mulai Evaluasi HOTS
+        </button>
+      </div>
+    </section>
+
+    <!-- ======================================================= -->
+    <!-- BAGIAN 2: EVALUASI / KUIS HOTS BERSTIMULUS              -->
+    <!-- ======================================================= -->
+    <section id="sectionKuis" class="hidden space-y-6">
+
+      <!-- TAHAP A: FORMULIR IDENTITAS & PERINGATAN KEAMANAN -->
+      <div id="quizIntroCard" class="max-w-2xl mx-auto bg-white rounded-3xl border-2 border-slate-200 shadow-xl overflow-hidden animate-pop">
+        <div class="bg-gradient-to-r from-blue-600 via-teal-600 to-emerald-600 p-6 sm:p-8 text-white text-center relative">
+          <div class="inline-flex items-center gap-2 bg-white/20 backdrop-blur-sm px-3.5 py-1 rounded-full text-xs font-bold mb-3">
+            <span>🛡️</span> SISTEM EVALUASI TERPROTEKSI (ANTI-PINDAH TAB)
+          </div>
+          <h2 class="text-2xl sm:text-3xl font-bold tracking-tight">Evaluasi HOTS: Zat Adiktif</h2>
+          <p class="text-blue-50 text-sm mt-1">10 Soal Pilihan Ganda Berstimulus • Waktu Pengerjaan 7 Menit</p>
+        </div>
+
+        <div class="p-6 sm:p-8 space-y-6">
+          <!-- Kotak Aturan Penting -->
+          <div class="bg-amber-50 border-2 border-amber-300 rounded-2xl p-4 sm:p-5 space-y-2.5">
+            <h3 class="text-base font-bold text-amber-900 flex items-center gap-2">
+              <span>⚠️</span> Peraturan Wajib Sebelum Mulai:
+            </h3>
+            <ul class="text-xs sm:text-sm text-amber-900/90 space-y-1.5 list-disc pl-5 font-medium">
+              <li>Waktu pengerjaan adalah <strong>7 menit (07:00)</strong> hitung mundur otomatis.</li>
+              <li>Begitu tombol mulai ditekan, <strong>tab materi akan terkunci</strong> dan soal langsung aktif.</li>
+              <li class="text-red-700 font-bold">DILARANG BERALIH TAB, MEMBUKA APLIKASI LAIN, ATAU KELUAR DARI HALAMAN INI! Jika terdeteksi beralih tab, layar akan otomatis berubah MERAH, berbunyi ALARM, dan ujian dinyatakan GAGAL.</li>
+              <li>Raih nilai <strong>di atas 80 (&ge; 90)</strong> untuk mendapatkan apresiasi spesial!</li>
+            </ul>
+          </div>
+
+          <!-- Form Nama dan Kelas -->
+          <form id="studentForm" onsubmit="startQuiz(event)" class="space-y-4">
+            <div>
+              <label for="studentName" class="block text-sm font-bold text-slate-700 mb-1.5">Nama Lengkap Siswa <span class="text-red-500">*</span></label>
+              <input type="text" id="studentName" required placeholder="Contoh: Ahmad Fauzan" class="w-full px-4 py-3 rounded-2xl border-2 border-slate-200 focus:border-teal-500 focus:outline-none text-slate-800 font-semibold transition" />
+            </div>
+
+            <div>
+              <label for="studentClass" class="block text-sm font-bold text-slate-700 mb-1.5">Kelas <span class="text-red-500">*</span></label>
+              <input type="text" id="studentClass" required placeholder="Contoh: VIII-A / 8B" class="w-full px-4 py-3 rounded-2xl border-2 border-slate-200 focus:border-teal-500 focus:outline-none text-slate-800 font-semibold transition" />
+            </div>
+
+            <div id="formErrorMsg" class="hidden text-sm font-bold text-red-600 bg-red-50 p-3 rounded-xl border border-red-200">
+              Mohon lengkapi Nama Lengkap dan Kelas terlebih dahulu!
+            </div>
+
+            <button type="submit" class="w-full py-4 rounded-2xl bg-gradient-to-r from-teal-600 to-blue-600 hover:from-teal-700 hover:to-blue-700 text-white font-extrabold text-base shadow-lg hover:shadow-xl transition transform active:scale-[0.99] flex items-center justify-center gap-2">
+              <span>🚀</span> MULAI UJIAN SEKARANG (07:00)
+            </button>
+          </form>
+        </div>
+      </div>
+
+      <!-- TAHAP B: LEMBAR SOAL AKTIF (10 SOAL HOTS BERSTIMULUS) -->
+      <div id="quizActiveArea" class="hidden space-y-6">
+        <!-- Info Peserta & Status Keamanan -->
+        <div class="bg-white rounded-2xl p-4 border-2 border-teal-200 shadow-sm flex flex-wrap items-center justify-between gap-3">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-full bg-teal-100 text-teal-700 flex items-center justify-center font-extrabold text-lg">
+              👤
+            </div>
+            <div>
+              <p class="text-xs text-slate-500 font-semibold">Peserta Ujian Aktif:</p>
+              <p class="text-sm sm:text-base font-extrabold text-slate-800">
+                <span id="displayStudentName">-</span> • <span id="displayStudentClass" class="text-teal-700">-</span>
+              </p>
+            </div>
+          </div>
+          <div class="flex items-center gap-2 text-xs font-bold bg-emerald-50 text-emerald-700 px-3 py-1.5 rounded-xl border border-emerald-200">
+            <span>🔒</span> Anti-Pindah Tab Aktif (Jangan Tinggalkan Halaman)
+          </div>
+        </div>
+
+        <!-- Daftar 10 Soal HOTS -->
+        <div id="questionsContainer" class="space-y-6">
+          <!-- Dirender dinamis oleh JavaScript -->
+        </div>
+
+        <!-- Peringatan Belum Lengkap -->
+        <div id="unansweredAlert" class="hidden bg-amber-50 border-2 border-amber-400 text-amber-900 p-4 rounded-2xl text-sm font-bold text-center">
+          Masih ada soal yang belum dijawab! Silakan periksa kembali nomor yang belum dipilih.
+        </div>
+
+        <!-- Tombol Kumpulkan Jawaban -->
+        <div class="bg-white rounded-3xl p-6 border-2 border-slate-200 shadow-md flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div class="text-center sm:text-left">
+            <p class="text-sm font-bold text-slate-800">Sudah yakin dengan semua jawabanmu?</p>
+            <p class="text-xs text-slate-500">Pastikan ke-10 soal HOTS telah terisi sebelum menekan tombol selesai.</p>
+          </div>
+          <button onclick="submitQuiz(false)" class="w-full sm:w-auto px-8 py-4 rounded-2xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white font-extrabold text-base shadow-lg transition flex items-center justify-center gap-2">
+            <span>✅</span> Selesai & Lihat Nilai
+          </button>
+        </div>
+      </div>
+
+      <!-- TAHAP C: HALAMAN HASIL & DRIVER SHOPEEFOOD -->
+      <div id="quizResultArea" class="hidden space-y-6 animate-pop">
+        <!-- Kartu Utama Hasil + Ilustrasi Driver ShopeeFood -->
+        <div id="resultBannerCard" class="rounded-3xl border-4 p-6 sm:p-10 shadow-2xl text-center relative overflow-hidden">
+          <!-- Konten hasil & karakter ShopeeFood dirender dinamis sesuai skor (>80 atau <=80) -->
+        </div>
+
+        <!-- Pembahasan Soal HOTS -->
+        <div class="bg-white rounded-3xl border-2 border-slate-200 p-6 sm:p-8 shadow-md space-y-5">
+          <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-200 pb-4">
+            <div>
+              <h3 class="text-xl font-bold text-slate-800">📖 Kunci Jawaban & Pembahasan HOTS</h3>
+              <p class="text-xs text-slate-500">Pelajari kembali analisis setiap stimulus soal di bawah ini</p>
+            </div>
+            <button onclick="resetQuizSystem()" class="px-5 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-900 text-white font-bold text-xs sm:text-sm transition">
+              🔄 Coba Ujian Lagi
+            </button>
+          </div>
+          <div id="reviewContainer" class="space-y-4">
+            <!-- Pembahasan tiap soal dirender oleh JS -->
+          </div>
+        </div>
+      </div>
+
+    </section>
+  </main>
+
+  <!-- ========================================================= -->
+  <!-- OVERLAY LAYAR MERAH PELANGGARAN PINDAH TAB (DISKUALIFIKASI) -->
+  <!-- ========================================================= -->
+  <div id="cheatingOverlay" class="hidden fixed inset-0 z-50 animate-danger-bg text-white flex flex-col items-center justify-center p-6 text-center overflow-y-auto">
+    <div class="max-w-xl w-full bg-red-950/90 border-4 border-white rounded-3xl p-6 sm:p-10 shadow-2xl space-y-5 animate-pop">
+      <div class="w-20 h-20 mx-auto rounded-full bg-white text-red-600 flex items-center justify-center text-5xl font-black shadow-lg animate-bounce">
+        🚨
+      </div>
+      <div class="inline-block bg-white text-red-700 font-extrabold text-xs sm:text-sm px-4 py-1.5 rounded-full uppercase tracking-widest">
+        PELANGGARAN KEAMANAN TERDETEKSI
+      </div>
+      <h2 class="text-2xl sm:text-4xl font-extrabold tracking-tight leading-tight">
+        ANDA BERALIH TAB!<br/>UJIAN OTOMATIS GAGAL!
+      </h2>
+      <p class="text-red-100 text-sm sm:text-base leading-relaxed">
+        Sistem mendeteksi Anda meninggalkan halaman ujian atau membuka tab/aplikasi lain saat waktu sedang berjalan. Sesuai aturan, status ujian <strong id="cheatStudentInfo" class="underline">Peserta</strong> dinyatakan <strong>GAGAL (Skor: 0)</strong>.
+      </p>
+
+      <div class="bg-red-900/80 border border-red-400/50 rounded-2xl p-4 text-xs sm:text-sm text-red-100">
+        🔊 Peringatan suara aktif pada perangkat Anda. Klik tombol di bawah untuk mematikan alarm atau mengulang ujian dari awal.
+      </div>
+
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-3 pt-2">
+        <button onclick="stopAlarmSound()" class="w-full sm:w-auto px-6 py-3.5 rounded-2xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-extrabold text-sm shadow-lg transition">
+          🔇 Matikan Bunyi Alarm
+        </button>
+        <button onclick="resetFromCheating()" class="w-full sm:w-auto px-6 py-3.5 rounded-2xl bg-white hover:bg-slate-100 text-red-700 font-extrabold text-sm shadow-lg transition">
+          🔄 Ulangi Ujian dari Awal
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================= -->
+  <!-- JAVASCRIPT TERINTEGRASI (MATERI, KUIS HOTS, AUDIO, GUARD) -->
+  <!-- ========================================================= -->
+  <script>
+    // =========================================================================
+    // 1. DATA 10 SLIDE MATERI INFOGRAFIS (PERSIS SEPERTI 10 GAMBAR LAMPIRAN)
+    // =========================================================================
+    const slidesData = [
+      {
+        num: 1,
+        shortTitle: "Sampul",
+        render: () => `
+          <div class="flex flex-col items-center justify-center text-center py-4 sm:py-6 space-y-6">
+            <!-- Dekorasi Sains Atas -->
+            <div class="flex flex-wrap items-center justify-center gap-6 sm:gap-12 text-3xl sm:text-4xl">
+              <span class="animate-float" title="Struktur Molekul">🧬</span>
+              <span class="animate-float" style="animation-delay:0.4s" title="Atom">⚛️</span>
+              <span class="animate-float" style="animation-delay:0.8s" title="Labu Kimia">🧪</span>
+              <span class="animate-float" style="animation-delay:1.2s" title="Tanaman Alami">🌿</span>
+            </div>
+
+            <!-- Awan Judul Utama seperti Gambar 1 -->
+            <div class="relative max-w-2xl w-full bg-gradient-to-b from-blue-50 via-white to-teal-50 border-4 border-dashed border-blue-300 rounded-[3rem] px-6 py-10 sm:py-12 shadow-inner">
+              <span class="inline-block bg-teal-100 text-teal-800 text-xs font-extrabold px-4 py-1.5 rounded-full mb-3 tracking-wider uppercase">
+                Bab Ilmu Pengetahuan Alam (IPA)
+              </span>
+              <h2 class="text-5xl sm:text-7xl font-extrabold tracking-tight text-blue-900 drop-shadow-sm leading-none">
+                ZAT
+              </h2>
+              <h2 class="text-4xl sm:text-6xl font-extrabold tracking-tight text-teal-600 drop-shadow-sm mt-1">
+                ADIKTIF
+              </h2>
+
+              <!-- Ilustrasi Otak Dua Sisi -->
+              <div class="mt-6 flex items-center justify-center gap-3">
+                <div class="px-4 py-2 rounded-2xl bg-blue-100/80 border border-blue-200 flex items-center gap-2">
+                  <span class="text-3xl">🧠</span>
+                  <span class="text-xs sm:text-sm font-bold text-blue-900 text-left leading-tight">
+                    Memengaruhi Kerja Otak<br/>&amp; Sistem Saraf Pusat
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <!-- 4 Simbol Larangan seperti Bagian Bawah Gambar 1 -->
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 max-w-2xl w-full pt-2">
+              <div class="bg-rose-50 border-2 border-rose-200 rounded-2xl p-3 flex flex-col items-center">
+                <div class="relative text-3xl mb-1">🚬<span class="absolute -inset-1 flex items-center justify-center text-red-600 font-black text-4xl opacity-80">🚫</span></div>
+                <span class="text-xs font-bold text-rose-800">Hindari Rokok</span>
+              </div>
+              <div class="bg-rose-50 border-2 border-rose-200 rounded-2xl p-3 flex flex-col items-center">
+                <div class="relative text-3xl mb-1">💊<span class="absolute -inset-1 flex items-center justify-center text-red-600 font-black text-4xl opacity-80">🚫</span></div>
+                <span class="text-xs font-bold text-rose-800">Hindari Pil Terlarang</span>
+              </div>
+              <div class="bg-rose-50 border-2 border-rose-200 rounded-2xl p-3 flex flex-col items-center">
+                <div class="relative text-3xl mb-1">🍾<span class="absolute -inset-1 flex items-center justify-center text-red-600 font-black text-4xl opacity-80">🚫</span></div>
+                <span class="text-xs font-bold text-rose-800">Hindari Alkohol</span>
+              </div>
+              <div class="bg-rose-50 border-2 border-rose-200 rounded-2xl p-3 flex flex-col items-center">
+                <div class="relative text-3xl mb-1">💉<span class="absolute -inset-1 flex items-center justify-center text-red-600 font-black text-4xl opacity-80">🚫</span></div>
+                <span class="text-xs font-bold text-rose-800">Hindari Narkotika</span>
+              </div>
+            </div>
+          </div>
+        `
+      },
+      {
+        num: 2,
+        shortTitle: "Apersepsi",
+        render: () => `
+          <div class="space-y-6">
+            <!-- Header Judul -->
+            <div class="text-center">
+              <div class="inline-flex items-center gap-2 text-3xl sm:text-4xl font-extrabold text-blue-950">
+                <span>💭</span> <h2>Apersepsi</h2>
+              </div>
+              <div class="w-32 h-1.5 bg-blue-200 rounded-full mx-auto mt-2"></div>
+            </div>
+
+            <!-- Kotak 1: Pertanyaan Situasi Sehari-hari -->
+            <div class="bg-amber-50/90 border-2 border-amber-200 rounded-3xl p-5 sm:p-6 flex flex-col md:flex-row items-center gap-5">
+              <div class="flex-1 space-y-3 text-sm sm:text-base leading-relaxed text-slate-700">
+                <p>
+                  Pernahkah kalian melihat seseorang yang merasa sulit berhenti mengonsumsi <strong class="text-blue-800">kopi, merokok, atau menggunakan suatu zat tertentu</strong>?
+                </p>
+                <p>
+                  Ketika tidak mengonsumsinya, orang tersebut mungkin merasa <strong>gelisah, sulit berkonsentrasi, mudah marah, atau merasa tidak nyaman</strong>.
+                </p>
+              </div>
+              <div class="bg-white rounded-2xl p-4 border border-amber-200 flex flex-col items-center text-center min-w-[160px] shadow-sm">
+                <span class="text-5xl mb-2">😫☕</span>
+                <span class="text-xs font-bold text-amber-900">Gelisah &amp; Sulit Fokus saat Berhenti</span>
+              </div>
+            </div>
+
+            <!-- Kotak 2: Mengapa Hal Tersebut Bisa Terjadi? -->
+            <div class="bg-sky-50/90 border-2 border-sky-200 rounded-3xl p-5 sm:p-6 space-y-3">
+              <div class="inline-flex items-center gap-2 bg-blue-900 text-white px-4 py-1.5 rounded-full text-sm font-bold shadow-sm">
+                <span>💡</span> Mengapa hal tersebut bisa terjadi?
+              </div>
+              <div class="grid md:grid-cols-3 gap-4 items-center">
+                <div class="md:col-span-2 space-y-2.5 text-sm sm:text-base text-slate-700 leading-relaxed">
+                  <p>
+                    Di dalam kehidupan sehari-hari, terdapat berbagai zat yang dapat memengaruhi kerja otak dan sistem saraf.
+                  </p>
+                  <p>
+                    Beberapa zat dapat membuat seseorang merasa lebih <strong class="text-blue-700">rileks, bersemangat, atau mengantuk</strong>.
+                  </p>
+                  <p>
+                    Namun, jika digunakan berulang kali, beberapa zat tersebut dapat menyebabkan <strong>ketergantungan</strong> sehingga seseorang sulit menghentikan penggunaannya.
+                  </p>
+                </div>
+                <div class="bg-white rounded-2xl p-4 border border-sky-200 text-center shadow-sm">
+                  <div class="text-5xl mb-1">🧠✨</div>
+                  <p class="text-xs font-bold text-blue-900">Sistem Saraf &amp; Otak Beradaptasi terhadap Zat</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Kotak 3: Definisi Utama (Megafon) -->
+            <div class="bg-white dashed-box rounded-3xl p-5 sm:p-6 flex flex-col sm:flex-row items-center gap-4 shadow-sm">
+              <div class="text-5xl shrink-0">📢</div>
+              <p class="text-base sm:text-lg font-bold text-slate-800 text-center sm:text-left leading-relaxed">
+                “Zat yang dapat menyebabkan seseorang mengalami <span class="text-orange-600">keinginan untuk terus menggunakannya dan menimbulkan ketergantungan</span> disebut <span class="text-blue-900 text-xl underline decoration-teal-400 decoration-4">zat adiktif</span>.”
+              </p>
+            </div>
+          </div>
+        `
+      },
+      {
+        num: 3,
+        shortTitle: "Pemantik",
+        render: () => `
+          <div class="space-y-5">
+            <div class="text-center">
+              <span class="text-3xl">💡</span>
+              <h2 class="text-3xl sm:text-4xl font-extrabold text-blue-950">Pertanyaan Pemantik</h2>
+              <p class="text-xs sm:text-sm text-slate-500 mt-1">Klik setiap pertanyaan untuk melihat petunjuk konsep jawabannya!</p>
+            </div>
+
+            <div class="space-y-3">
+              ${[
+                {
+                  no: 1,
+                  color: "bg-blue-50 border-blue-200",
+                  badge: "bg-blue-600",
+                  icon: "🚭",
+                  q: "Mengapa seseorang yang sudah terbiasa merokok bisa merasa sulit untuk berhenti?",
+                  hint: "Petunjuk: Rokok mengandung nikotin yang merangsang pelepasan dopamin di otak dan membuat otak beradaptasi sehingga muncul ketergantungan."
+                },
+                {
+                  no: 2,
+                  color: "bg-emerald-50 border-emerald-200",
+                  badge: "bg-emerald-600",
+                  icon: "💊❓",
+                  q: "Apakah semua zat yang menyebabkan ketergantungan berasal dari obat-obatan terlarang?",
+                  hint: "Petunjuk: Tidak! Kafein dalam kopi/teh dan nikotin dalam rokok bersifat legal/terbatas, namun tetap merupakan zat adiktif yang bisa memicu ketergantungan."
+                },
+                {
+                  no: 3,
+                  color: "bg-amber-50 border-amber-200",
+                  badge: "bg-amber-500",
+                  icon: "🫁🧠",
+                  q: "Apa yang terjadi pada tubuh jika seseorang menggunakan zat adiktif secara terus-menerus?",
+                  hint: "Petunjuk: Terjadi toleransi (butuh dosis lebih tinggi), gangguan fungsi otak, kerusakan organ (hati, jantung, paru-paru), serta gejala putus zat saat berhenti."
+                },
+                {
+                  no: 4,
+                  color: "bg-rose-50 border-rose-200",
+                  badge: "bg-rose-500",
+                  icon: "🍷⚠️",
+                  q: "Mengapa rokok dan minuman beralkohol dapat membahayakan kesehatan?",
+                  hint: "Petunjuk: Nikotin meningkatkan denyut jantung & tekanan darah, sedangkan alkohol merusak koordinasi gerak, kesadaran, serta organ hati dan otak."
+                },
+                {
+                  no: 5,
+                  color: "bg-purple-50 border-purple-200",
+                  badge: "bg-purple-600",
+                  icon: "🛡️❤️",
+                  q: "Bagaimana cara kita menghindari penyalahgunaan zat adiktif?",
+                  hint: "Petunjuk: Memahami bahayanya sejak dini, memilih pergaulan sehat, bijak mengonsumsi kafein, dan menolak tegas tawaran rokok, alkohol, maupun narkotika."
+                }
+              ].map(item => `
+                <div class="${item.color} border-2 rounded-2xl p-4 transition hover:shadow-md">
+                  <div class="flex items-center justify-between gap-3">
+                    <div class="flex items-center gap-3.5">
+                      <span class="${item.badge} text-white font-extrabold w-9 h-9 rounded-full flex items-center justify-center shrink-0 shadow-sm">${item.no}</span>
+                      <p class="font-bold text-slate-800 text-sm sm:text-base">${item.q}</p>
+                    </div>
+                    <div class="flex items-center gap-2 shrink-0">
+                      <span class="text-2xl hidden sm:inline">${item.icon}</span>
+                      <button onclick="toggleHint('hint-${item.no}')" class="px-3 py-1.5 rounded-xl bg-white border border-slate-300 text-xs font-bold text-slate-700 hover:bg-slate-100 transition">
+                        Petunjuk ▾
+                      </button>
+                    </div>
+                  </div>
+                  <div id="hint-${item.no}" class="hidden mt-3 pt-2.5 border-t border-slate-200/80 text-xs sm:text-sm font-semibold text-teal-800 bg-white/80 p-3 rounded-xl">
+                    ${item.hint}
+                  </div>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+        `
+      },
+      {
+        num: 4,
+        shortTitle: "Pengertian",
+        render: () => `
+          <div class="space-y-6">
+            <div class="text-center">
+              <h2 class="text-3xl sm:text-4xl font-extrabold text-blue-950">Pengertian <span class="text-teal-600">Zat Adiktif</span></h2>
+            </div>
+
+            <!-- Kotak Definisi Putus-putus Hijau -->
+            <div class="bg-teal-50/70 border-2 border-dashed border-teal-600 rounded-3xl p-5 text-center">
+              <p class="text-sm sm:text-base text-slate-800 leading-relaxed font-medium">
+                <strong class="text-teal-700 font-extrabold">Zat adiktif</strong> adalah zat atau bahan yang apabila dikonsumsi dapat menyebabkan <strong>ketergantungan</strong>, yaitu kondisi ketika seseorang merasa ingin terus menggunakan zat tersebut dan mengalami kesulitan untuk menghentikan penggunaannya.
+              </p>
+            </div>
+
+            <!-- Pengaruh pada Otak & Sistem Saraf -->
+            <div class="bg-slate-50 rounded-3xl p-5 border border-slate-200">
+              <p class="text-center font-bold text-slate-800 text-sm sm:text-base mb-4">
+                Zat adiktif dapat memengaruhi <strong>otak dan sistem saraf</strong>, sehingga dapat mengubah:
+              </p>
+              <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                <div class="bg-amber-100/80 border border-amber-300 rounded-2xl p-3 flex items-center gap-2.5 font-bold text-sm text-amber-950">
+                  <span class="text-xl">😊</span> suasana hati
+                </div>
+                <div class="bg-rose-100/80 border border-rose-300 rounded-2xl p-3 flex items-center gap-2.5 font-bold text-sm text-rose-950">
+                  <span class="text-xl">💗</span> perasaan
+                </div>
+                <div class="bg-sky-100/80 border border-sky-300 rounded-2xl p-3 flex items-center gap-2.5 font-bold text-sm text-sky-950">
+                  <span class="text-xl">💭</span> pikiran
+                </div>
+                <div class="bg-emerald-100/80 border border-emerald-300 rounded-2xl p-3 flex items-center gap-2.5 font-bold text-sm text-emerald-950">
+                  <span class="text-xl">🧠</span> kesadaran
+                </div>
+                <div class="bg-purple-100/80 border border-purple-300 rounded-2xl p-3 flex items-center gap-2.5 font-bold text-sm text-purple-950">
+                  <span class="text-xl">🧍</span> perilaku
+                </div>
+                <div class="bg-orange-100/80 border border-orange-300 rounded-2xl p-3 flex items-center gap-2.5 font-bold text-sm text-orange-950">
+                  <span class="text-xl">🏃</span> aktivitas tubuh
+                </div>
+              </div>
+            </div>
+
+            <!-- Peringatan Gangguan Kesehatan -->
+            <div class="bg-amber-50 border-2 border-amber-300 rounded-2xl p-4 flex items-center gap-3.5">
+              <span class="text-3xl shrink-0">⚠️</span>
+              <p class="text-xs sm:text-sm font-semibold text-slate-800">
+                Penggunaan zat adiktif secara berlebihan atau tidak sesuai aturan dapat menyebabkan berbagai <strong class="text-red-600">gangguan kesehatan</strong>, baik secara fisik maupun psikologis.
+              </p>
+            </div>
+
+            <!-- 5 Contoh Zat Adiktif -->
+            <div>
+              <div class="text-center mb-3">
+                <span class="bg-teal-700 text-white text-xs sm:text-sm font-bold px-5 py-1.5 rounded-full">
+                  Contoh zat yang dapat bersifat adiktif
+                </span>
+              </div>
+              <div class="grid grid-cols-2 sm:grid-cols-5 gap-2.5 text-center">
+                <div class="bg-blue-50 border border-blue-200 rounded-2xl p-3">
+                  <div class="text-3xl mb-1">🚬</div>
+                  <p class="text-xs font-bold text-slate-800">nikotin dalam rokok</p>
+                </div>
+                <div class="bg-teal-50 border border-teal-200 rounded-2xl p-3">
+                  <div class="text-3xl mb-1">🍷</div>
+                  <p class="text-xs font-bold text-slate-800">alkohol</p>
+                </div>
+                <div class="bg-amber-50 border border-amber-200 rounded-2xl p-3">
+                  <div class="text-3xl mb-1">☕</div>
+                  <p class="text-xs font-bold text-slate-800">kafein dalam kopi &amp; minuman tertentu</p>
+                </div>
+                <div class="bg-purple-50 border border-purple-200 rounded-2xl p-3">
+                  <div class="text-3xl mb-1">🧠✨</div>
+                  <p class="text-xs font-bold text-slate-800">zat psikoaktif tertentu</p>
+                </div>
+                <div class="col-span-2 sm:col-span-1 bg-rose-50 border border-rose-200 rounded-2xl p-3">
+                  <div class="text-3xl mb-1">💊</div>
+                  <p class="text-xs font-bold text-slate-800">narkotika &amp; psikotropika yang disalahgunakan</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Kotak Penting Status Hukum -->
+            <div class="bg-rose-50/90 border-2 border-rose-200 rounded-2xl p-4 flex items-center gap-3.5">
+              <span class="w-9 h-9 rounded-full bg-rose-600 text-white font-black flex items-center justify-center shrink-0">!</span>
+              <p class="text-xs sm:text-sm text-slate-800 leading-relaxed">
+                <strong class="text-rose-700">Penting:</strong> tidak semua zat adiktif memiliki tingkat bahaya dan status hukum yang sama. Ada zat yang digunakan secara legal dan terbatas, tetapi tetap dapat menyebabkan ketergantungan. Ada pula zat yang penggunaannya dilarang atau sangat dibatasi oleh hukum.
+              </p>
+              <span class="text-2xl hidden sm:inline">⚖️</span>
+            </div>
+          </div>
+        `
+      },
+      {
+        num: 5,
+        shortTitle: "Mekanisme",
+        render: () => `
+          <div class="space-y-5">
+            <div class="text-center">
+              <h2 class="text-2xl sm:text-3xl font-extrabold text-blue-950">
+                Mengapa <span class="text-rose-500">Zat Adiktif</span> Dapat Menyebabkan Ketergantungan?
+              </h2>
+            </div>
+
+            <!-- Sistem Penghargaan Otak -->
+            <div class="bg-blue-50/70 border-2 border-dashed border-blue-400 rounded-3xl p-4 sm:p-5 flex flex-col sm:flex-row items-center gap-4">
+              <div class="text-5xl shrink-0">🧠🏆</div>
+              <p class="text-xs sm:text-sm text-slate-800 leading-relaxed">
+                Otak manusia memiliki sistem yang mengatur <strong class="text-rose-600">rasa senang</strong>, <strong class="text-emerald-600">penghargaan</strong>, <strong class="text-blue-600">motivasi</strong>, dan <strong class="text-amber-600">kebiasaan</strong>. Beberapa zat dapat memengaruhi sistem tersebut sehingga seseorang merasakan efek tertentu setelah menggunakannya.
+              </p>
+            </div>
+
+            <!-- Adaptasi Otak -->
+            <div class="bg-emerald-50 border border-emerald-200 rounded-2xl p-3.5 text-center text-xs sm:text-sm font-semibold text-slate-800">
+              🧩 Jika digunakan berulang kali, otak dapat <strong class="text-emerald-700">beradaptasi</strong> terhadap keberadaan zat tersebut.
+            </div>
+
+            <!-- Alur 5 Tahap Akibatnya -->
+            <div>
+              <p class="text-sm font-extrabold text-blue-900 mb-2.5">Akibatnya (Alur Terjadinya Ketergantungan):</p>
+              <div class="grid grid-cols-2 sm:grid-cols-5 gap-2.5 text-center">
+                <div class="bg-amber-50 border-2 border-amber-200 rounded-2xl p-3">
+                  <div class="text-2xl mb-1">🔄</div>
+                  <p class="text-xs font-bold text-slate-800">1. Penggunaan berulang</p>
+                </div>
+                <div class="bg-slate-100 border-2 border-slate-300 rounded-2xl p-3">
+                  <div class="text-2xl mb-1">⚙️</div>
+                  <p class="text-xs font-bold text-slate-800">2. Tubuh beradaptasi</p>
+                </div>
+                <div class="bg-rose-50 border-2 border-rose-200 rounded-2xl p-3">
+                  <div class="text-2xl mb-1">💭❤️</div>
+                  <p class="text-xs font-bold text-slate-800">3. Keinginan menggunakan kembali</p>
+                </div>
+                <div class="bg-sky-50 border-2 border-sky-200 rounded-2xl p-3">
+                  <div class="text-2xl mb-1">✋</div>
+                  <p class="text-xs font-bold text-slate-800">4. Sulit berhenti</p>
+                </div>
+                <div class="col-span-2 sm:col-span-1 bg-purple-100 border-2 border-purple-300 rounded-2xl p-3">
+                  <div class="text-2xl mb-1">⛓️</div>
+                  <p class="text-xs font-extrabold text-purple-900">5. Ketergantungan</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Toleransi -->
+            <div class="bg-amber-50/90 border border-amber-300 rounded-2xl p-4 flex items-center gap-3.5">
+              <span class="text-3xl shrink-0">📈</span>
+              <p class="text-xs sm:text-sm text-slate-800 leading-relaxed">
+                Pada kondisi tertentu, seseorang dapat membutuhkan jumlah zat yang lebih besar untuk mendapatkan efek yang sama. Kondisi ini disebut <strong class="text-orange-600 text-base">toleransi</strong>.
+              </p>
+            </div>
+
+            <!-- Gejala Putus Zat (Withdrawal) -->
+            <div class="bg-rose-50/70 border-2 border-rose-200 rounded-3xl p-4 sm:p-5 space-y-3">
+              <div class="flex items-start gap-3">
+                <span class="text-2xl">⚠️</span>
+                <p class="text-xs sm:text-sm font-semibold text-slate-800">
+                  Jika penggunaan dihentikan secara tiba-tiba, seseorang yang sudah mengalami ketergantungan dapat mengalami <strong class="text-purple-800">gejala putus zat (withdrawal)</strong>, misalnya:
+                </p>
+              </div>
+              <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-center text-xs font-bold text-slate-700">
+                <div class="bg-white p-2.5 rounded-xl border border-rose-100">😰 Gelisah</div>
+                <div class="bg-white p-2.5 rounded-xl border border-rose-100">😠 Mudah marah</div>
+                <div class="bg-white p-2.5 rounded-xl border border-rose-100">😴 Sulit tidur</div>
+                <div class="bg-white p-2.5 rounded-xl border border-rose-100">💦 Berkeringat</div>
+                <div class="bg-white p-2.5 rounded-xl border border-rose-100">🤕 Sakit kepala</div>
+                <div class="bg-white p-2.5 rounded-xl border border-rose-100">🤢 Mual</div>
+                <div class="bg-white p-2.5 rounded-xl border border-rose-100">😵‍💫 Sulit konsentrasi</div>
+                <div class="bg-white p-2.5 rounded-xl border border-rose-100">💊 Keinginan kuat pakai lagi</div>
+              </div>
+            </div>
+
+            <!-- Pesan Empati -->
+            <div class="bg-pink-50 border border-pink-200 rounded-2xl p-3.5 flex items-center gap-3 text-xs sm:text-sm text-slate-700">
+              <span class="text-2xl">🤲❤️</span>
+              <p><strong>Ketergantungan bukan berarti lemah</strong>, tetapi kondisi medis yang dapat memengaruhi otak dan perilaku. Dukungan, informasi, dan bantuan profesional sangat penting untuk membantu proses pemulihan.</p>
+            </div>
+          </div>
+        `
+      },
+      {
+        num: 6,
+        shortTitle: "Jenis-Jenis",
+        render: () => `
+          <div class="space-y-5">
+            <div class="text-center">
+              <h2 class="text-3xl sm:text-4xl font-extrabold text-blue-900">Jenis-Jenis <span class="text-orange-500">Zat Adiktif</span></h2>
+              <div class="inline-block bg-amber-100 border border-amber-300 px-4 py-1.5 rounded-full text-xs sm:text-sm font-bold text-amber-950 mt-2">
+                💡 Secara sederhana, zat adiktif yang perlu dipelajari dapat dikelompokkan menjadi:
+              </div>
+            </div>
+
+            <!-- Grid 4 Kartu -->
+            <div class="grid md:grid-cols-2 gap-4">
+              <!-- 1. Nikotin -->
+              <div class="bg-sky-50 border-2 border-sky-200 rounded-3xl p-5 space-y-3">
+                <div class="flex items-center justify-between">
+                  <span class="bg-blue-700 text-white font-extrabold px-4 py-1 rounded-full text-base">1. Nikotin</span>
+                  <span class="text-3xl">🚬🌿</span>
+                </div>
+                <p class="text-xs sm:text-sm font-semibold text-slate-700">
+                  Nikotin adalah zat adiktif yang terdapat pada produk tembakau seperti rokok dan vape.
+                </p>
+                <div class="bg-white rounded-2xl p-3.5 border border-sky-100 space-y-1.5">
+                  <span class="inline-block bg-blue-600 text-white text-xs font-bold px-2.5 py-0.5 rounded-md">Efek:</span>
+                  <ul class="text-xs text-slate-700 space-y-1 font-medium">
+                    <li>✔️ Menimbulkan rasa rileks sementara</li>
+                    <li>✔️ Meningkatkan denyut jantung</li>
+                    <li>✔️ Memengaruhi konsentrasi</li>
+                    <li>✔️ Dapat menyebabkan ketergantungan</li>
+                  </ul>
+                </div>
+              </div>
+
+              <!-- 2. Alkohol -->
+              <div class="bg-orange-50 border-2 border-orange-200 rounded-3xl p-5 space-y-3">
+                <div class="flex items-center justify-between">
+                  <span class="bg-orange-600 text-white font-extrabold px-4 py-1 rounded-full text-base">2. Alkohol</span>
+                  <span class="text-3xl">🍾🍷</span>
+                </div>
+                <p class="text-xs sm:text-sm font-semibold text-slate-700">
+                  Alkohol adalah zat adiktif yang terdapat dalam minuman beralkohol.
+                </p>
+                <div class="bg-white rounded-2xl p-3.5 border border-orange-100 space-y-1.5">
+                  <span class="inline-block bg-orange-600 text-white text-xs font-bold px-2.5 py-0.5 rounded-md">Efek:</span>
+                  <ul class="text-xs text-slate-700 space-y-1 font-medium">
+                    <li>✔️ Menimbulkan rasa nyaman dan senang</li>
+                    <li>✔️ Mengurangi kesadaran</li>
+                    <li>✔️ Memengaruhi koordinasi tubuh</li>
+                    <li>✔️ Dapat menyebabkan ketergantungan jika digunakan berlebihan</li>
+                  </ul>
+                </div>
+              </div>
+
+              <!-- 3. Kafein -->
+              <div class="bg-emerald-50 border-2 border-emerald-200 rounded-3xl p-5 space-y-3">
+                <div class="flex items-center justify-between">
+                  <span class="bg-emerald-700 text-white font-extrabold px-4 py-1 rounded-full text-base">3. Kafein</span>
+                  <span class="text-3xl">☕🍫</span>
+                </div>
+                <p class="text-xs sm:text-sm font-semibold text-slate-700">
+                  Kafein adalah zat adiktif yang terdapat dalam kopi, teh, cokelat, dan minuman tertentu.
+                </p>
+                <div class="bg-white rounded-2xl p-3.5 border border-emerald-100 space-y-1.5">
+                  <span class="inline-block bg-emerald-600 text-white text-xs font-bold px-2.5 py-0.5 rounded-md">Efek:</span>
+                  <ul class="text-xs text-slate-700 space-y-1 font-medium">
+                    <li>✔️ Membuat tubuh lebih segar dan waspada</li>
+                    <li>✔️ Mengurangi rasa kantuk</li>
+                    <li>✔️ Meningkatkan konsentrasi</li>
+                    <li>✔️ Dapat menyebabkan ketergantungan jika dikonsumsi berlebihan</li>
+                  </ul>
+                </div>
+              </div>
+
+              <!-- 4. Zat Psikoaktif Lainnya -->
+              <div class="bg-purple-50 border-2 border-purple-200 rounded-3xl p-5 space-y-3">
+                <div class="flex items-center justify-between">
+                  <span class="bg-purple-700 text-white font-extrabold px-4 py-1 rounded-full text-sm sm:text-base">4. Zat Psikoaktif Lainnya</span>
+                  <span class="text-3xl">💊💉</span>
+                </div>
+                <p class="text-xs font-bold text-purple-900 bg-purple-100 px-3 py-1 rounded-lg">
+                  Termasuk narkotika dan psikotropika yang dapat disalahgunakan
+                </p>
+                <p class="text-xs sm:text-sm font-semibold text-slate-700">
+                  Zat psikoaktif adalah zat yang memengaruhi pikiran, perasaan, dan kesadaran.
+                </p>
+                <div class="bg-white rounded-2xl p-3.5 border border-purple-100 space-y-1.5">
+                  <span class="inline-block bg-purple-600 text-white text-xs font-bold px-2.5 py-0.5 rounded-md">Efek:</span>
+                  <ul class="text-xs text-slate-700 space-y-1 font-medium">
+                    <li>✔️ Mengubah suasana hati dan perilaku</li>
+                    <li>✔️ Menimbulkan rasa euforia (senang berlebihan)</li>
+                    <li>✔️ Mengganggu fungsi otak dan saraf</li>
+                    <li>✔️ Memiliki risiko ketergantungan yang tinggi</li>
+                    <li>✔️ Sebagian besar penggunaannya dilarang oleh hukum</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <div class="bg-blue-50 dashed-box rounded-2xl p-3.5 text-center text-xs sm:text-sm font-bold text-slate-800">
+              🛡️ Memahami jenis-jenis zat adiktif membantu kita bersikap lebih <span class="text-blue-700">bijak</span> dan <span class="text-emerald-700">menjaga kesehatan</span> diri.
+            </div>
+          </div>
+        `
+      },
+      {
+        num: 7,
+        shortTitle: "1. Nikotin",
+        render: () => `
+          <div class="space-y-5">
+            <div class="flex items-center justify-center gap-3">
+              <span class="bg-blue-950 text-white text-2xl sm:text-3xl font-extrabold px-4 py-1.5 rounded-2xl">1.</span>
+              <h2 class="text-3xl sm:text-4xl font-extrabold text-blue-950">Nikotin</h2>
+              <span class="text-3xl">🌿🚬</span>
+            </div>
+
+            <!-- Mekanisme Dopamin -->
+            <div class="grid md:grid-cols-3 gap-4 items-center">
+              <div class="md:col-span-2 bg-slate-50 border border-slate-200 rounded-3xl p-4 sm:p-5 space-y-3 text-xs sm:text-sm text-slate-700 leading-relaxed">
+                <p>
+                  🌿 Nikotin merupakan salah satu zat yang terdapat dalam <strong>tanaman tembakau</strong> dan menjadi <strong class="text-blue-700">zat utama yang menyebabkan ketergantungan</strong> pada produk tembakau.
+                </p>
+                <hr class="border-dashed border-slate-300"/>
+                <p>
+                  ⚡ Nikotin bekerja pada <strong class="text-blue-800">sistem saraf</strong> dan dapat menimbulkan rasa nyaman atau meningkatkan kewaspadaan untuk sementara. Namun, penggunaan berulang dapat menyebabkan <strong class="text-blue-700">ketergantungan</strong>.
+                </p>
+              </div>
+              <div class="bg-blue-900 text-white rounded-3xl p-4 text-center space-y-2 shadow-md">
+                <div class="text-4xl">🧠✨</div>
+                <p class="text-xs leading-relaxed">
+                  Nikotin merangsang pelepasan <strong class="text-amber-300">dopamin</strong> di otak yang menimbulkan rasa nyaman atau waspada.
+                </p>
+              </div>
+            </div>
+
+            <!-- Produk yang mengandung nikotin -->
+            <div>
+              <div class="text-center mb-3">
+                <span class="bg-emerald-700 text-white text-xs sm:text-sm font-bold px-5 py-1.5 rounded-full">
+                  Produk yang dapat mengandung nikotin
+                </span>
+              </div>
+              <div class="grid grid-cols-2 sm:grid-cols-5 gap-2.5 text-center text-xs font-bold text-slate-800">
+                <div class="bg-amber-50 border border-amber-200 rounded-2xl p-3">
+                  <div class="text-2xl mb-1">🚬</div>
+                  rokok konvensional
+                </div>
+                <div class="bg-amber-50 border border-amber-200 rounded-2xl p-3">
+                  <div class="text-2xl mb-1">🪵</div>
+                  cerutu
+                </div>
+                <div class="bg-amber-50 border border-amber-200 rounded-2xl p-3">
+                  <div class="text-2xl mb-1">🍂</div>
+                  tembakau
+                </div>
+                <div class="bg-amber-50 border border-amber-200 rounded-2xl p-3">
+                  <div class="text-2xl mb-1">🥫</div>
+                  beberapa produk tembakau lainnya
+                </div>
+                <div class="col-span-2 sm:col-span-1 bg-sky-50 border border-sky-200 rounded-2xl p-3">
+                  <div class="text-2xl mb-1">💨</div>
+                  rokok elektronik atau vape yang mengandung nikotin
+                </div>
+              </div>
+            </div>
+
+            <!-- Dampak Nikotin & Kotak Perhatian Remaja -->
+            <div class="grid md:grid-cols-2 gap-4">
+              <div class="bg-slate-50 border-2 border-dashed border-slate-300 rounded-3xl p-4 space-y-2">
+                <span class="inline-block bg-blue-950 text-white text-xs font-bold px-4 py-1 rounded-full">Dampak nikotin</span>
+                <p class="text-xs text-slate-500 font-semibold">Penggunaan nikotin dapat:</p>
+                <ul class="space-y-1.5 text-xs sm:text-sm font-bold text-slate-800">
+                  <li class="bg-rose-50 px-3 py-1.5 rounded-xl">❤️ meningkatkan denyut jantung</li>
+                  <li class="bg-emerald-50 px-3 py-1.5 rounded-xl">🩺 memengaruhi tekanan darah</li>
+                  <li class="bg-purple-50 px-3 py-1.5 rounded-xl">⛓️ menyebabkan ketergantungan</li>
+                  <li class="bg-sky-50 px-3 py-1.5 rounded-xl">🧠 memengaruhi kerja otak</li>
+                  <li class="bg-amber-50 px-3 py-1.5 rounded-xl">🔄 keinginan kuat untuk menggunakan kembali</li>
+                </ul>
+              </div>
+
+              <div class="bg-rose-50 border-2 border-rose-200 rounded-3xl p-4 flex flex-col justify-between space-y-3">
+                <div class="space-y-2 text-center">
+                  <span class="inline-block bg-rose-500 text-white text-xs font-extrabold px-4 py-1 rounded-full">⚠️ Perhatian!</span>
+                  <p class="text-xs sm:text-sm text-slate-800 leading-relaxed">
+                    Pada <strong>anak dan remaja</strong>, paparan nikotin sangat perlu dihindari karena <strong class="text-rose-700">otak masih mengalami perkembangan</strong>.
+                  </p>
+                  <div class="text-4xl py-1">🧒🧠👧</div>
+                </div>
+                <div class="bg-white border border-rose-200 rounded-2xl p-3 text-xs font-bold text-slate-700 text-center">
+                  🛡️ Jangan mulai merokok atau menggunakan produk yang mengandung nikotin. Lindungi dirimu dan masa depanmu!
+                </div>
+              </div>
+            </div>
+          </div>
+        `
+      },
+      {
+        num: 8,
+        shortTitle: "2. Alkohol",
+        render: () => `
+          <div class="space-y-5">
+            <div class="flex items-center justify-center gap-3">
+              <span class="bg-indigo-400 text-white text-2xl sm:text-3xl font-extrabold px-4 py-1.5 rounded-2xl">2.</span>
+              <h2 class="text-3xl sm:text-4xl font-extrabold text-blue-950">Alkohol</h2>
+              <span class="text-3xl">🍾🍺</span>
+            </div>
+
+            <!-- Penjelasan & Perbandingan Dosis -->
+            <div class="grid md:grid-cols-2 gap-4 items-center">
+              <div class="space-y-3 text-xs sm:text-sm text-slate-700 leading-relaxed">
+                <div class="bg-purple-50 border border-purple-200 rounded-2xl p-4">
+                  🧠 Alkohol, terutama <strong>etanol</strong> yang terdapat dalam minuman beralkohol, merupakan zat yang dapat memengaruhi <strong class="text-purple-800">sistem saraf pusat</strong>.
+                </div>
+                <div class="bg-slate-50 border border-slate-200 rounded-2xl p-4">
+                  Dalam jumlah tertentu, alkohol dapat menyebabkan seseorang merasa lebih rileks atau kurang mampu mengendalikan diri. Semakin banyak alkohol yang dikonsumsi, <strong class="text-blue-800">fungsi otak dan koordinasi tubuh</strong> dapat semakin terganggu.
+                </div>
+              </div>
+
+              <!-- Visual Perbandingan Sedikit vs Banyak -->
+              <div class="grid grid-cols-2 gap-3 text-center">
+                <div class="bg-indigo-50 border-2 border-indigo-200 rounded-3xl p-4 flex flex-col justify-center">
+                  <span class="text-4xl mb-2">😌</span>
+                  <p class="text-xs font-extrabold text-indigo-950">Sedikit alkohol<br/>→ rileks</p>
+                </div>
+                <div class="bg-amber-100 border-2 border-amber-300 rounded-3xl p-4 flex flex-col justify-center">
+                  <span class="text-4xl mb-2">😵‍💫💫</span>
+                  <p class="text-xs font-extrabold text-amber-950">Semakin banyak alkohol<br/>→ fungsi otak terganggu</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- 7 Dampak Alkohol -->
+            <div class="bg-slate-50 dashed-box rounded-3xl p-4 sm:p-5 space-y-3">
+              <div class="text-center">
+                <span class="bg-blue-950 text-white text-xs sm:text-sm font-bold px-5 py-1 rounded-full">Dampak alkohol</span>
+                <p class="text-xs text-slate-600 font-semibold mt-1">Penggunaan alkohol dapat menyebabkan:</p>
+              </div>
+              <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5 text-center text-xs font-bold text-slate-800">
+                <div class="bg-white p-3 rounded-2xl border border-slate-200">📖 berkurangnya konsentrasi</div>
+                <div class="bg-white p-3 rounded-2xl border border-slate-200">🏃‍♂️ gangguan koordinasi gerak</div>
+                <div class="bg-white p-3 rounded-2xl border border-slate-200">🤸 gangguan keseimbangan</div>
+                <div class="bg-white p-3 rounded-2xl border border-slate-200">😡 perubahan perilaku</div>
+                <div class="bg-white p-3 rounded-2xl border border-slate-200">❓ kemampuan mengambil keputusan menurun</div>
+                <div class="bg-white p-3 rounded-2xl border border-slate-200">😵 gangguan kesadaran</div>
+                <div class="bg-white p-3 rounded-2xl border border-slate-200">⛓️ ketergantungan</div>
+                <div class="bg-purple-100 p-3 rounded-2xl border border-purple-300 text-purple-950 flex items-center justify-center">
+                  ❗ Makin sering &amp; banyak = makin besar dampaknya
+                </div>
+              </div>
+            </div>
+
+            <!-- Jangka Panjang & Ingat -->
+            <div class="grid md:grid-cols-2 gap-4">
+              <div class="bg-amber-50 border-2 border-amber-300 rounded-2xl p-4 flex items-center gap-3">
+                <span class="text-3xl">⚠️</span>
+                <p class="text-xs sm:text-sm text-slate-800">
+                  Penggunaan dalam <strong class="text-red-600">jangka panjang dan berlebihan</strong> dapat meningkatkan risiko <strong class="text-red-600">kerusakan berbagai organ</strong>, termasuk <strong>hati, otak, jantung</strong>, serta meningkatkan risiko berbagai penyakit.
+                </p>
+              </div>
+              <div class="bg-blue-50 border-2 border-blue-200 rounded-2xl p-4 space-y-1.5">
+                <span class="inline-block bg-blue-700 text-white text-xs font-bold px-3 py-0.5 rounded-md">🛡️ Ingat!</span>
+                <ul class="text-xs font-bold text-slate-700 space-y-1 list-disc pl-4">
+                  <li>Alkohol bukan solusi untuk masalah.</li>
+                  <li>Mengendalikan diri adalah pilihan terbaik.</li>
+                  <li>Pilih hidup sehat, cerdas, dan produktif tanpa alkohol!</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        `
+      },
+      {
+        num: 9,
+        shortTitle: "3. Kafein",
+        render: () => `
+          <div class="space-y-5">
+            <div class="flex items-center justify-center gap-3">
+              <span class="bg-amber-800 text-white text-2xl sm:text-3xl font-extrabold px-4 py-1.5 rounded-2xl">3.</span>
+              <h2 class="text-3xl sm:text-4xl font-extrabold text-amber-950">Kafein</h2>
+              <span class="text-3xl">☕🍫</span>
+            </div>
+
+            <!-- Sumber & Manfaat Terbatas -->
+            <div class="grid md:grid-cols-3 gap-4">
+              <div class="md:col-span-2 bg-amber-50/80 border border-amber-200 rounded-3xl p-4 space-y-3">
+                <p class="text-xs sm:text-sm text-slate-800 leading-relaxed">
+                  🌿 Kafein adalah zat yang dapat merangsang <strong class="text-amber-800">sistem saraf pusat</strong>. Kafein secara alami terdapat dalam beberapa tanaman dan banyak ditemukan dalam:
+                </p>
+                <div class="grid grid-cols-5 gap-2 text-center text-xs font-bold text-slate-800">
+                  <div class="bg-white p-2 rounded-xl border border-amber-200">☕<br/>kopi</div>
+                  <div class="bg-white p-2 rounded-xl border border-amber-200">🍵<br/>teh</div>
+                  <div class="bg-white p-2 rounded-xl border border-amber-200">🍫<br/>cokelat</div>
+                  <div class="bg-white p-2 rounded-xl border border-amber-200">⚡<br/>minuman energi</div>
+                  <div class="bg-white p-2 rounded-xl border border-amber-200">🥤<br/>produk lainnya</div>
+                </div>
+              </div>
+              <div class="bg-sky-50 border border-sky-200 rounded-3xl p-4 flex flex-col justify-center">
+                <p class="text-xs sm:text-sm text-slate-800 leading-relaxed">
+                  ✅ Dalam jumlah tertentu, kafein dapat membantu seseorang merasa <strong class="text-blue-700">lebih waspada dan tidak mudah mengantuk</strong>.
+                </p>
+              </div>
+            </div>
+
+            <!-- Dampak Konsumsi Berlebihan -->
+            <div class="bg-rose-50/70 border-2 border-rose-200 rounded-3xl p-4 space-y-2.5">
+              <div class="text-center">
+                <span class="bg-rose-600 text-white text-xs sm:text-sm font-bold px-4 py-1 rounded-full">
+                  ❗ Namun, konsumsi kafein berlebihan dapat menimbulkan:
+                </span>
+              </div>
+              <div class="grid grid-cols-2 sm:grid-cols-6 gap-2 text-center text-xs font-bold text-slate-800">
+                <div class="bg-white p-2.5 rounded-xl border border-rose-100">🛌 sulit tidur</div>
+                <div class="bg-white p-2.5 rounded-xl border border-rose-100">💓 jantung berdebar</div>
+                <div class="bg-white p-2.5 rounded-xl border border-rose-100">😰 gelisah</div>
+                <div class="bg-white p-2.5 rounded-xl border border-rose-100">🤕 sakit kepala</div>
+                <div class="bg-white p-2.5 rounded-xl border border-rose-100">🫨 tremor / gemetar</div>
+                <div class="bg-white p-2.5 rounded-xl border border-rose-100">🤢 gangguan pencernaan</div>
+              </div>
+            </div>
+
+            <!-- Gejala Putus Kafein & Batas Aman Remaja -->
+            <div class="grid md:grid-cols-2 gap-4">
+              <div class="bg-slate-50 border border-slate-200 rounded-2xl p-4 flex items-center gap-3">
+                <span class="text-3xl">😫☕</span>
+                <p class="text-xs sm:text-sm text-slate-700 leading-relaxed">
+                  Jika seseorang yang terbiasa mengonsumsi banyak kafein tiba-tiba berhenti, dapat muncul gejala seperti <strong class="text-blue-700">sakit kepala, lelah, atau sulit berkonsentrasi</strong>.
+                </p>
+              </div>
+
+              <div class="bg-emerald-50 border-2 border-emerald-300 rounded-2xl p-4 space-y-2">
+                <span class="inline-block bg-emerald-700 text-white text-xs font-bold px-3 py-0.5 rounded-full">💡 Tahukah kamu?</span>
+                <p class="text-xs text-slate-800 font-semibold">
+                  Jumlah kafein yang aman untuk remaja (± 13–18 tahun) adalah <strong class="text-emerald-800">tidak lebih dari 100 mg per hari</strong>. Setara dengan:
+                </p>
+                <div class="grid grid-cols-3 gap-2 text-center text-xs font-bold bg-white p-2.5 rounded-xl border border-emerald-200">
+                  <div>☕ 1 cangkir kopi (150 ml)</div>
+                  <div>🍵 2 cangkir teh (150 ml)</div>
+                  <div>🍫 2–3 potong cokelat</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Fakta Legal vs Adiktif -->
+            <div class="bg-amber-50 border border-amber-300 rounded-2xl p-3.5 flex items-center gap-3 text-xs sm:text-sm text-slate-800">
+              <span class="text-2xl">⚖️</span>
+              <p><strong>Jadi, zat adiktif tidak selalu berarti zat terlarang.</strong> Beberapa zat yang <strong class="text-amber-700">legal</strong> juga dapat menimbulkan <strong class="text-rose-600">ketergantungan</strong> apabila digunakan secara berlebihan.</p>
+            </div>
+          </div>
+        `
+      },
+      {
+        num: 10,
+        shortTitle: "4. Narkotika",
+        render: () => `
+          <div class="space-y-5">
+            <div class="flex items-center justify-center gap-3">
+              <span class="bg-blue-950 text-white text-2xl sm:text-3xl font-extrabold px-4 py-1.5 rounded-2xl">4.</span>
+              <h2 class="text-3xl sm:text-4xl font-extrabold text-blue-950">Narkotika</h2>
+              <span class="text-3xl">💊💉</span>
+            </div>
+
+            <!-- Pengertian & Contoh -->
+            <div class="grid md:grid-cols-3 gap-4">
+              <div class="md:col-span-2 bg-sky-50/80 border border-sky-200 rounded-3xl p-4 space-y-3 text-xs sm:text-sm text-slate-800">
+                <p class="leading-relaxed">
+                  🛡️ Narkotika adalah kelompok zat atau obat yang dapat <strong class="text-blue-800">memengaruhi sistem saraf pusat</strong> dan dapat menyebabkan <strong class="text-blue-800">perubahan kesadaran</strong>, <strong class="text-blue-800">mengurangi rasa nyeri</strong>, serta berpotensi menimbulkan <strong class="text-blue-800">ketergantungan</strong>.
+                </p>
+                <div class="bg-amber-50 border border-amber-300 rounded-xl p-2.5 text-xs font-bold text-amber-950">
+                  ⚠️ Narkotika termasuk zat yang dapat menyebabkan ketergantungan fisik maupun psikologis.
+                </div>
+              </div>
+
+              <div class="bg-slate-800 text-white rounded-3xl p-4 space-y-2">
+                <span class="inline-block bg-teal-500 text-slate-950 text-xs font-extrabold px-3 py-0.5 rounded-full">Contoh narkotika:</span>
+                <ul class="text-xs font-bold space-y-1 pl-4 list-disc text-slate-100">
+                  <li>morfin</li>
+                  <li>heroin</li>
+                  <li>kokain</li>
+                  <li>ganja</li>
+                  <li>ekstasi</li>
+                  <li>dan lainnya</li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- Penggunaan Medis -->
+            <div class="bg-emerald-50 border-2 border-emerald-200 rounded-2xl p-4 flex flex-col sm:flex-row items-center gap-4">
+              <span class="text-4xl">👨‍⚕️📋</span>
+              <div class="text-xs sm:text-sm text-slate-800 space-y-1">
+                <p>
+                  Dalam dunia medis, beberapa narkotika dapat digunakan untuk <strong>tujuan tertentu</strong>, misalnya sebagai <strong class="text-emerald-700">obat pereda nyeri yang sangat kuat</strong>.
+                </p>
+                <p class="text-xs font-bold text-emerald-800">
+                  ✅ Penggunaannya harus berdasarkan aturan dan pengawasan tenaga kesehatan.
+                </p>
+              </div>
+            </div>
+
+            <!-- 6 Dampak Penyalahgunaan -->
+            <div class="bg-rose-50/70 border-2 border-rose-200 rounded-3xl p-4 space-y-3">
+              <div class="text-center">
+                <span class="bg-rose-600 text-white text-xs sm:text-sm font-bold px-5 py-1 rounded-full">
+                  🚨 Penyalahgunaan narkotika dapat menyebabkan:
+                </span>
+              </div>
+              <div class="grid sm:grid-cols-3 gap-2.5 text-xs">
+                <div class="bg-white p-3 rounded-2xl border border-rose-100">
+                  <p class="font-extrabold text-rose-700 mb-1">⛓️ Ketergantungan</p>
+                  <p class="text-slate-600">Membuat seseorang ingin terus menggunakan dan sulit berhenti meskipun sudah tahu bahayanya.</p>
+                </div>
+                <div class="bg-white p-3 rounded-2xl border border-rose-100">
+                  <p class="font-extrabold text-rose-700 mb-1">🧠 Gangguan fungsi otak</p>
+                  <p class="text-slate-600">Memengaruhi daya ingat, konsentrasi, kemampuan berpikir, dan pengambilan keputusan.</p>
+                </div>
+                <div class="bg-white p-3 rounded-2xl border border-rose-100">
+                  <p class="font-extrabold text-rose-700 mb-1">😵 Gangguan kesadaran</p>
+                  <p class="text-slate-600">Dapat menyebabkan mengantuk berlebihan, linglung, hingga kehilangan kesadaran.</p>
+                </div>
+                <div class="bg-white p-3 rounded-2xl border border-rose-100">
+                  <p class="font-extrabold text-rose-700 mb-1">🫀 Gangguan organ tubuh</p>
+                  <p class="text-slate-600">Dapat merusak hati, jantung, paru-paru, ginjal, dan sistem kekebalan tubuh.</p>
+                </div>
+                <div class="bg-white p-3 rounded-2xl border border-rose-100">
+                  <p class="font-extrabold text-rose-700 mb-1">😡 Perubahan perilaku</p>
+                  <p class="text-slate-600">Dapat membuat seseorang menjadi mudah marah, menarik diri, atau berperilaku agresif.</p>
+                </div>
+                <div class="bg-white p-3 rounded-2xl border border-rose-100">
+                  <p class="font-extrabold text-rose-700 mb-1">🏥 Masalah kesehatan serius</p>
+                  <p class="text-slate-600">Meningkatkan risiko overdosis, infeksi, penyakit menular, hingga kematian.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="bg-blue-50 border border-blue-200 rounded-2xl p-3.5 text-center text-xs sm:text-sm font-bold text-blue-950">
+              🛡️ Narkotika bukan solusi, melainkan sumber masalah besar dalam hidup. <span class="text-teal-700">Jauhi narkotika, pilih hidup sehat dan masa depan yang lebih baik!</span>
+            </div>
+          </div>
+        `
+      }
+    ];
+
+    // =========================================================================
+    // 2. DATA 10 SOAL PG HOTS BERSTIMULUS (BERDASARKAN 10 GAMBAR MATERI)
+    // =========================================================================
+    const hotsQuestions = [
+      {
+        id: 1,
+        stimulus: "Perhatikan kasus berikut: Raka (16 tahun) awalnya hanya mencoba mengonsumsi minuman berenergi berkafein tinggi setiap malam saat bermain gim daring. Setelah 2 bulan, Raka merasa 1 kaleng sudah tidak lagi membuatnya terjaga, sehingga ia harus meminum 3 kaleng sekaligus agar mendapatkan efek segar yang sama.",
+        question: "Berdasarkan mekanisme kerja zat adiktif pada sistem saraf, fenomena yang dialami Raka secara ilmiah disebut sebagai ....",
+        options: [
+          "Gejala putus zat (withdrawal) akibat penghentian zat secara mendadak",
+          "Toleransi zat, yaitu adaptasi otak sehingga membutuhkan dosis lebih besar untuk efek yang sama",
+          "Euforia sementara akibat kerusakan permanen pada organ hati dan ginjal",
+          "Intoksikasi akut yang menurunkan kesadaran dan koordinasi gerak tubuh"
+        ],
+        correct: 1,
+        explanation: "Toleransi adalah kondisi ketika otak telah beradaptasi terhadap paparan zat berulang sehingga seseorang membutuhkan jumlah zat yang lebih besar untuk memperoleh efek yang sama."
+      },
+      {
+        id: 2,
+        stimulus: "Seorang perokok berat memutuskan berhenti merokok secara tiba-tiba pada hari Senin. Pada hari Selasa dan Rabu, ia mengeluh sakit kepala hebat, sangat gelisah, mudah marah kepada teman-temannya, berkeringat dingin, serta sulit berkonsentrasi saat bekerja.",
+        question: "Analisis yang paling tepat mengenai penyebab munculnya rangkaian gejala tersebut adalah ....",
+        options: [
+          "Terjadi keracunan karbon monoksida baru di dalam aliran darah",
+          "Otak mengalami gejala putus zat (withdrawal) karena suplai nikotin yang biasa merangsang dopamin terhenti mendadak",
+          "Kadar oksigen di otak meningkat terlalu drastis sehingga memicu migrain",
+          "Sistem saraf pusat mengalami kelumpuhan permanen akibat berhenti merokok"
+        ],
+        correct: 1,
+        explanation: "Ketika seseorang yang sudah mengalami ketergantungan menghentikan zat secara tiba-tiba, muncul gejala putus zat (withdrawal) seperti gelisah, mudah marah, berkeringat, sakit kepala, dan sulit konsentrasi."
+      },
+      {
+        id: 3,
+        stimulus: "Perhatikan tabel panduan batas aman kafein harian untuk remaja usia 13–18 tahun (maksimal 100 mg/hari):\n• 1 cangkir kopi (150 ml) ≈ 100 mg kafein\n• 2 cangkir teh (150 ml) ≈ 100 mg kafein\n• 2–3 potong cokelat ≈ 100 mg kafein\n\nDalam satu hari, Dinda (15 tahun) meminum 1 cangkir kopi 150 ml di pagi hari, lalu sore harinya ia minum 2 cangkir teh dan makan 3 potong cokelat.",
+        question: "Dampak fisiologis yang paling mungkin dialami Dinda pada malam harinya akibat pola konsumsi tersebut adalah ....",
+        options: [
+          "Mengantuk berat dan kehilangan kesadaran karena sistem saraf pusat tertekan",
+          "Jantung berdebar, gelisah, tangan gemetar (tremor), dan sulit tidur karena kafein melampaui batas aman harian",
+          "Penurunan tekanan darah drastis disertai peningkatan nafsu makan berlebihan",
+          "Tidak terjadi efek apa pun karena kafein merupakan zat legal yang bebas dikonsumsi tanpa batas"
+        ],
+        correct: 1,
+        explanation: "Dinda mengonsumsi setara ±300 mg kafein (3 kali lipat batas aman remaja 100 mg/hari). Konsumsi kafein berlebihan merangsang saraf pusat secara berlebih sehingga memicu sulit tidur, jantung berdebar, gelisah, dan tremor."
+      },
+      {
+        id: 4,
+        stimulus: "Dalam sebuah diskusi kelas, Budi berpendapat: 'Semua zat adiktif pasti merupakan barang haram dan terlarang oleh hukum, sehingga kalau suatu minuman atau produk dijual bebas di warung, pasti produk tersebut tidak mengandung zat adiktif.'",
+        question: "Evaluasi yang paling tepat terhadap pernyataan Budi berdasarkan konsep zat adiktif adalah ....",
+        options: [
+          "Benar, karena pemerintah melarang seluruh zat yang memengaruhi sistem saraf beredar di masyarakat",
+          "Salah, karena status hukum berbeda dengan sifat adiktif; kafein dan nikotin bersifat legal/terbatas namun tetap dapat menyebabkan ketergantungan",
+          "Benar, karena zat adiktif hanya berasal dari kelompok narkotika seperti morfin dan heroin",
+          "Salah, karena semua makanan dan minuman kemasan mengandung narkotika dosis rendah"
+        ],
+        correct: 1,
+        explanation: "Zat adiktif tidak selalu berarti zat terlarang. Kafein (kopi/teh) dan nikotin (produk tembakau) memiliki status hukum legal/terbatas, tetapi tetap merupakan zat adiktif yang menimbulkan ketergantungan."
+      },
+      {
+        id: 5,
+        stimulus: "Kampanye kesehatan sekolah menekankan bahwa paparan nikotin (baik dari rokok konvensional maupun rokok elektrik/vape) jauh lebih berbahaya apabila dimulai pada usia anak dan remaja dibandingkan orang dewasa.",
+        question: "Alasan biologis utama yang mendasari peringatan khusus bagi anak dan remaja tersebut adalah ....",
+        options: [
+          "Paru-paru remaja belum memiliki selaput lendir sama sekali",
+          "Otak anak dan remaja masih berada dalam tahap perkembangan sehingga nikotin mudah merusak struktur dan sistem penghargaan otak",
+          "Remaja tidak memiliki enzim pencerna nikotin di dalam lambung",
+          "Rokok elektrik (vape) mengandung kadar alkohol yang lebih tinggi daripada rokok biasa"
+        ],
+        correct: 1,
+        explanation: "Pada anak dan remaja, otak masih mengalami perkembangan aktif. Paparan nikotin memengaruhi kerja otak dan sistem dopamin sehingga risiko kerusakan dan ketergantungan jauh lebih tinggi."
+      },
+      {
+        id: 6,
+        stimulus: "Sebuah laporan kecelakaan lalu lintas mencatat bahwa pengemudi kendaraan tidak dalam kondisi tertidur penuh, namun ia gagal memperkirakan jarak pengereman, berjalan sempoyongan saat keluar mobil, bicaranya melantur, dan emosinya meledak-ledak.",
+        question: "Berdasarkan gejala gangguan sistem saraf tersebut, zat adiktif yang paling kuat diduga telah dikonsumsi pengemudi dalam jumlah tinggi adalah ....",
+        options: [
+          "Kafein dalam teh hangat",
+          "Alkohol (etanol) yang mengganggu fungsi otak, koordinasi gerak, keseimbangan, dan pengambilan keputusan",
+          "Nikotin dari satu batang cerutu",
+          "Vitamin penambah stamina tubuh"
+        ],
+        correct: 1,
+        explanation: "Konsumsi alkohol dalam jumlah banyak mengganggu fungsi otak, koordinasi gerak, keseimbangan tubuh, perubahan perilaku, serta menurunkan kemampuan mengambil keputusan."
+      },
+      {
+        id: 7,
+        stimulus: "Di sebuah rumah sakit, dokter spesialis bedah memberikan suntikan morfin dengan takaran terukur kepada pasien pascaoperasi besar. Di sisi lain, aparat kepolisian menangkap pengedar yang menjual morfin secara ilegal di jalanan.",
+        question: "Perbedaan mendasar antara kedua peristiwa penggunaan morfin tersebut ditinjau dari ilmu kesehatan adalah ....",
+        options: [
+          "Morfin di rumah sakit tidak mengandung zat adiktif, sedangkan morfin di jalanan mengandung zat adiktif",
+          "Dalam dunia medis, narkotika tertentu digunakan sebagai obat pereda nyeri kuat di bawah pengawasan tenaga kesehatan, sedangkan di luar aturan medis termasuk penyalahgunaan berbahaya",
+          "Morfin hanya berbahaya jika digunakan oleh orang yang sedang sakit",
+          "Penggunaan morfin di jalanan tidak menyebabkan ketergantungan fisik maupun psikologis"
+        ],
+        correct: 1,
+        explanation: "Beberapa narkotika (seperti morfin) dimanfaatkan secara medis sebagai pereda nyeri sangat kuat dengan aturan ketat tenaga kesehatan. Tanpa pengawasan medis, hal itu merupakan penyalahgunaan yang memicu ketergantungan dan overdosis."
+      },
+      {
+        id: 8,
+        stimulus: "Perhatikan urutan proses berikut:\n(1) Otak beradaptasi terhadap zat\n(2) Ketergantungan\n(3) Penggunaan berulang\n(4) Sulit berhenti\n(5) Keinginan menggunakan kembali",
+        question: "Urutan mekanisme terbentuknya ketergantungan zat adiktif yang paling logis dan tepat adalah ....",
+        options: [
+          "(3) → (1) → (5) → (4) → (2)",
+          "(1) → (3) → (4) → (5) → (2)",
+          "(3) → (5) → (2) → (1) → (4)",
+          "(5) → (3) → (1) → (2) → (4)"
+        ],
+        correct: 0,
+        explanation: "Alur terjadinya ketergantungan dimulai dari: (3) Penggunaan berulang → (1) Tubuh/otak beradaptasi → (5) Keinginan menggunakan kembali → (4) Sulit berhenti → (2) Ketergantungan."
+      },
+      {
+        id: 9,
+        stimulus: "Andi diajak temannya mencoba vape dengan alasan: 'Tenang saja, ini cuma uap rasa buah-buahan, bukan rokok tembakau, jadi pasti tidak bikin ketagihan.' Namun setelah melihat kemasan cairan (liquid) vape tersebut, tertera keterangan 'Nicotine 3%'.",
+        question: "Tindakan dan analisis ilmiah paling tepat yang harus dilakukan Andi adalah ....",
+        options: [
+          "Menerima ajakan tersebut karena kadar 3% tidak dapat masuk ke aliran darah",
+          "Menolak tegas karena vape yang mengandung nikotin tetap merangsang pelepasan dopamin di otak, meningkatkan denyut jantung, dan memicu ketergantungan",
+          "Mencobanya sekali saja agar dianggap setia kawan karena nikotin vape mudah dikeluarkan lewat keringat",
+          "Menggantinya dengan minuman beralkohol dosis rendah agar lebih aman bagi otak"
+        ],
+        correct: 1,
+        explanation: "Rokok elektrik atau vape yang mengandung nikotin tetap membawa zat adiktif nikotin ke sistem saraf, merangsang dopamin, memengaruhi jantung dan tekanan darah, serta memicu ketergantungan."
+      },
+      {
+        id: 10,
+        stimulus: "Seseorang yang mengalami ketergantungan zat psikoaktif sering kali mendapat stigma negatif sebagai 'orang yang lemah iman atau malas'. Padahal, secara medis zat adiktif telah mengubah jalur komunikasi sel saraf di otak yang mengatur motivasi dan kebiasaan.",
+        question: "Berdasarkan pendekatan ilmiah dan kemanusiaan, langkah terbaik untuk membantu individu yang sudah terlanjur mengalami ketergantungan adalah ....",
+        options: [
+          "Mengucilkannya dari lingkungan sekolah dan keluarga agar ia jera",
+          "Membiarkannya mengonsumsi zat lebih banyak agar tubuhnya kebal sendiri",
+          "Memberikan dukungan moral, edukasi yang tepat, serta bantuan rehabilitasi dari tenaga profesional medis",
+          "Memaksanya berhenti tanpa pendampingan medis meskipun mengalami kejang dan gangguan kesadaran"
+        ],
+        correct: 2,
+        explanation: "Ketergantungan adalah kondisi medis yang memengaruhi otak dan perilaku. Dukungan keluarga/lingkungan, informasi yang benar, dan bantuan profesional sangat penting untuk pemulihan."
+      }
+    ];
+
+    // =========================================================================
+    // 3. STATE APLIKASI & VARIABEL KEAMANAN
+    // =========================================================================
+    let currentSlideIndex = 0;
+    let isExamActive = false;
+    let isExamFinished = false;
+    let examTimerInterval = null;
+    let remainingSeconds = 7 * 60; // 7 menit = 420 detik
+    let studentName = "";
+    let studentClass = "";
+    let userAnswers = new Array(hotsQuestions.length).fill(null);
+
+    // Web Audio API untuk Alarm & Efek Suara (Tanpa File Eksternal -> 100% Jalan di GitHub!)
+    let audioCtx = null;
+    let alarmInterval = null;
+
+    function initAudioContext() {
+      if (!audioCtx) {
+        const AudioContext = window.AudioContext || window.webkitAudioContext;
+        audioCtx = new AudioContext();
+      }
+      if (audioCtx.state === 'suspended') {
+        audioCtx.resume();
+      }
+    }
+
+    // Bunyi Alarm Sirine Keras saat Pindah Tab
+    function startAlarmSound() {
+      try {
+        initAudioContext();
+        stopAlarmSound(); // Pastikan tidak dobel
+
+        const playBeepPair = () => {
+          if (!audioCtx) return;
+          const now = audioCtx.currentTime;
+          const osc = audioCtx.createOscillator();
+          const gain = audioCtx.createGain();
+
+          osc.type = 'sawtooth';
+          osc.frequency.setValueAtTime(880, now);
+          osc.frequency.linearRampToValueAtTime(580, now + 0.25);
+          osc.frequency.linearRampToValueAtTime(920, now + 0.5);
+
+          gain.gain.setValueAtTime(0.35, now);
+          gain.gain.exponentialRampToValueAtTime(0.01, now + 0.55);
+
+          osc.connect(gain);
+          gain.connect(audioCtx.destination);
+
+          osc.start(now);
+          osc.stop(now + 0.55);
+        };
+
+        playBeepPair();
+        alarmInterval = setInterval(playBeepPair, 650);
+      } catch (e) {
+        console.warn("Audio alarm diblokir browser sampai ada interaksi:", e);
+      }
+    }
+
+    function stopAlarmSound() {
+      if (alarmInterval) {
+        clearInterval(alarmInterval);
+        alarmInterval = null;
+      }
+    }
+
+    // Bunyi Fanfare Kemenangan (>80) atau Melodi Semangat (<=80)
+    function playResultSound(isHighScore) {
+      try {
+        initAudioContext();
+        const now = audioCtx.currentTime;
+        const notes = isHighScore
+          ? [523.25, 659.25, 783.99, 1046.50] // C5 E5 G5 C6 (Fanfare Menang)
+          : [440.00, 493.88, 523.25, 587.33]; // A4 B4 C5 D5 (Melodi Semangat)
+
+        notes.forEach((freq, idx) => {
+          const osc = audioCtx.createOscillator();
+          const gain = audioCtx.createGain();
+          osc.type = isHighScore ? 'triangle' : 'sine';
+          osc.frequency.setValueAtTime(freq, now + idx * 0.16);
+
+          gain.gain.setValueAtTime(0.25, now + idx * 0.16);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + idx * 0.16 + 0.45);
+
+          osc.connect(gain);
+          gain.connect(audioCtx.destination);
+
+          osc.start(now + idx * 0.16);
+          osc.stop(now + idx * 0.16 + 0.45);
+        });
+      } catch (e) {
+        console.warn("Audio hasil tidak dapat diputar:", e);
+      }
+    }
+
+    // =========================================================================
+    // 4. RENDER SLIDE MATERI INFOGRAFIS
+    // =========================================================================
+    function renderSlidePills() {
+      const container = document.getElementById('slidePills');
+      container.innerHTML = slidesData.map((s, idx) => {
+        const active = idx === currentSlideIndex;
+        return `
+          <button onclick="goToSlide(${idx})"
+            class="px-3 py-1.5 rounded-xl text-xs font-bold whitespace-nowrap transition flex items-center gap-1.5 border ${
+              active
+                ? 'bg-teal-600 text-white border-teal-600 shadow-sm'
+                : 'bg-slate-50 text-slate-600 border-slate-200 hover:bg-teal-50 hover:text-teal-700'
+            }">
+            <span>${s.num}.</span>
+            <span>${s.shortTitle}</span>
+          </button>
+        `;
+      }).join('');
+    }
+
+    function renderCurrentSlide() {
+      const slide = slidesData[currentSlideIndex];
+      const container = document.getElementById('slideContainer');
+      container.classList.remove('animate-pop');
+      void container.offsetWidth; // Trigger reflow animasi
+      container.classList.add('animate-pop');
+      container.innerHTML = slide.render();
+
+      document.getElementById('slideIndicatorText').textContent = `Halaman ${slide.num} dari ${slidesData.length}`;
+      document.getElementById('btnPrevSlide').disabled = currentSlideIndex === 0;
+
+      const btnNext = document.getElementById('btnNextSlide');
+      const btnStartQuiz = document.getElementById('btnStartQuizFromMateri');
+
+      if (currentSlideIndex === slidesData.length - 1) {
+        btnNext.classList.add('hidden');
+        btnStartQuiz.classList.remove('hidden');
+      } else {
+        btnNext.classList.remove('hidden');
+        btnStartQuiz.classList.add('hidden');
+      }
+
+      renderSlidePills();
+    }
+
+    function changeSlide(delta) {
+      const nextIdx = currentSlideIndex + delta;
+      if (nextIdx >= 0 && nextIdx < slidesData.length) {
+        currentSlideIndex = nextIdx;
+        renderCurrentSlide();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    }
+
+    function goToSlide(idx) {
+      currentSlideIndex = idx;
+      renderCurrentSlide();
+    }
+
+    function toggleHint(id) {
+      const el = document.getElementById(id);
+      if (el) el.classList.toggle('hidden');
+    }
+
+    // =========================================================================
+    // 5. NAVIGASI TAB UTAMA (TERKUNCI SAAT UJIAN AKTIF)
+    // =========================================================================
+    function switchMainTab(tab) {
+      if (isExamActive) {
+        // Jika ujian aktif, materi dikunci rapat agar tidak menyontek
+        return;
+      }
+
+      const secMateri = document.getElementById('sectionMateri');
+      const secKuis = document.getElementById('sectionKuis');
+      const btnMateri = document.getElementById('btnTabMateri');
+      const btnKuis = document.getElementById('btnTabKuis');
+
+      if (tab === 'materi') {
+        secMateri.classList.remove('hidden');
+        secKuis.classList.add('hidden');
+        btnMateri.className = "px-4 py-2 rounded-xl text-sm font-bold transition-all bg-white text-teal-700 shadow-sm flex items-center gap-1.5";
+        btnKuis.className = "px-4 py-2 rounded-xl text-sm font-bold transition-all text-slate-600 hover:text-slate-900 flex items-center gap-1.5";
+      } else {
+        secMateri.classList.add('hidden');
+        secKuis.classList.remove('hidden');
+        btnKuis.className = "px-4 py-2 rounded-xl text-sm font-bold transition-all bg-white text-orange-600 shadow-sm flex items-center gap-1.5";
+        btnMateri.className = "px-4 py-2 rounded-xl text-sm font-bold transition-all text-slate-600 hover:text-slate-900 flex items-center gap-1.5";
+      }
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // =========================================================================
+    // 6. SISTEM KUIS HOTS, TIMER 7 MENIT & ANTI-PINDAH TAB
+    // =========================================================================
+    function startQuiz(event) {
+      event.preventDefault();
+      const nameInput = document.getElementById('studentName').value.trim();
+      const classInput = document.getElementById('studentClass').value.trim();
+      const errBox = document.getElementById('formErrorMsg');
+
+      if (!nameInput || !classInput) {
+        errBox.classList.remove('hidden');
+        return;
+      }
+
+      errBox.classList.add('hidden');
+      studentName = nameInput;
+      studentClass = classInput;
+
+      // Aktifkan AudioContext saat user menekan tombol mulai
+      initAudioContext();
+
+      // Set Status Ujian Aktif
+      isExamActive = true;
+      isExamFinished = false;
+      userAnswers = new Array(hotsQuestions.length).fill(null);
+      remainingSeconds = 7 * 60; // 7 Menit
+
+      // Kunci Tab Materi di Navbar
+      const btnMateri = document.getElementById('btnTabMateri');
+      btnMateri.classList.add('opacity-40', 'cursor-not-allowed');
+      btnMateri.title = "Materi terkunci selama ujian berlangsung";
+
+      // Tampilkan Identitas & Timer
+      document.getElementById('displayStudentName').textContent = studentName;
+      document.getElementById('displayStudentClass').textContent = studentClass;
+      document.getElementById('examTimerBadge').classList.remove('hidden');
+      document.getElementById('examTimerBadge').classList.add('flex');
+
+      // Sembunyikan Intro, Tampilkan 10 Soal
+      document.getElementById('quizIntroCard').classList.add('hidden');
+      document.getElementById('quizResultArea').classList.add('hidden');
+      document.getElementById('quizActiveArea').classList.remove('hidden');
+
+      renderQuestions();
+      startCountdownTimer();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function renderQuestions() {
+      const container = document.getElementById('questionsContainer');
+      const letters = ['A', 'B', 'C', 'D'];
+
+      container.innerHTML = hotsQuestions.map((q, qIdx) => `
+        <div id="question-card-${qIdx}" class="bg-white rounded-3xl border-2 border-slate-200 p-5 sm:p-7 shadow-sm space-y-4 transition">
+          <div class="flex items-center justify-between gap-2">
+            <span class="bg-teal-700 text-white text-xs font-extrabold px-3.5 py-1 rounded-full">
+              SOAL HOTS #${q.id}
+            </span>
+            <span class="text-xs font-bold text-slate-400">Bobot: 10 Poin</span>
+          </div>
+
+          <!-- Kotak Stimulus -->
+          <div class="bg-blue-50/80 border-l-4 border-blue-600 rounded-r-2xl p-4 text-xs sm:text-sm text-slate-700 leading-relaxed whitespace-pre-line">
+            <span class="block text-[11px] font-extrabold uppercase tracking-wider text-blue-800 mb-1">📌 Stimulus Analisis:</span>
+            ${q.stimulus}
+          </div>
+
+          <!-- Pertanyaan -->
+          <p class="font-bold text-slate-900 text-sm sm:text-base leading-snug">
+            ${q.id}. ${q.question}
+          </p>
+
+          <!-- Pilihan Jawaban A, B, C, D -->
+          <div class="space-y-2.5 pt-1">
+            ${q.options.map((opt, optIdx) => `
+              <label onclick="selectOption(${qIdx}, ${optIdx})" id="opt-label-${qIdx}-${optIdx}"
+                class="flex items-start gap-3 p-3.5 rounded-2xl border-2 border-slate-200 hover:border-teal-400 hover:bg-teal-50/40 cursor-pointer transition select-none">
+                <input type="radio" name="q-${qIdx}" value="${optIdx}" class="mt-1 accent-teal-600 w-4 h-4 shrink-0" />
+                <span class="font-extrabold text-teal-700 text-sm">${letters[optIdx]}.</span>
+                <span class="text-xs sm:text-sm font-medium text-slate-800 leading-relaxed">${opt}</span>
+              </label>
+            `).join('')}
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function selectOption(qIdx, optIdx) {
+      userAnswers[qIdx] = optIdx;
+      // Perbarui tampilan visual pilihan terpilih
+      for (let i = 0; i < 4; i++) {
+        const lbl = document.getElementById(`opt-label-${qIdx}-${i}`);
+        if (lbl) {
+          if (i === optIdx) {
+            lbl.classList.add('border-teal-600', 'bg-teal-50');
+            lbl.classList.remove('border-slate-200');
+          } else {
+            lbl.classList.remove('border-teal-600', 'bg-teal-50');
+            lbl.classList.add('border-slate-200');
+          }
+        }
+      }
+      // Hilangkan highlight merah jika sebelumnya belum dijawab
+      const card = document.getElementById(`question-card-${qIdx}`);
+      if (card) card.classList.remove('border-amber-500');
+    }
+
+    function startCountdownTimer() {
+      updateTimerDisplay();
+      if (examTimerInterval) clearInterval(examTimerInterval);
+
+      examTimerInterval = setInterval(() => {
+        if (!isExamActive) {
+          clearInterval(examTimerInterval);
+          return;
+        }
+        remainingSeconds--;
+        updateTimerDisplay();
+
+        if (remainingSeconds <= 0) {
+          clearInterval(examTimerInterval);
+          submitQuiz(true); // Waktu habis -> kumpulkan otomatis
+        }
+      }, 1000);
+    }
+
+    function updateTimerDisplay() {
+      const mins = Math.floor(Math.max(0, remainingSeconds) / 60);
+      const secs = Math.max(0, remainingSeconds) % 60;
+      const formatted = `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+      document.getElementById('timerDisplay').textContent = formatted;
+    }
+
+    // =========================================================================
+    // DETEKSI BERALIH TAB / KELUAR JENDELA (VISIBILITYCHANGE & BLUR)
+    // =========================================================================
+    function handleTabViolation() {
+      if (!isExamActive || isExamFinished) return;
+
+      // Hentikan ujian & tandai gagal
+      isExamActive = false;
+      isExamFinished = true;
+      if (examTimerInterval) clearInterval(examTimerInterval);
+
+      // Tampilkan Overlay Merah Terang & Bunyikan Alarm
+      document.getElementById('cheatStudentInfo').textContent = `${studentName} (${studentClass})`;
+      document.getElementById('cheatingOverlay').classList.remove('hidden');
+      startAlarmSound();
+    }
+
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden && isExamActive && !isExamFinished) {
+        handleTabViolation();
+      }
+    });
+
+    window.addEventListener('blur', () => {
+      if (isExamActive && !isExamFinished) {
+        handleTabViolation();
+      }
+    });
+
+    function resetFromCheating() {
+      stopAlarmSound();
+      document.getElementById('cheatingOverlay').classList.add('hidden');
+      resetQuizSystem();
+    }
+
+    // =========================================================================
+    // 7. PENILAIAN & KARAKTER DRIVER SHOPEEFOOD (SVG VEKTOR KUSTOM)
+    // =========================================================================
+    function getShopeeFoodDriverSVG(isHappyWinner) {
+      // Ilustrasi SVG Driver ShopeeFood berjaket & helm oranye khas ShopeeFood (#EE4D2D)
+      // Mode 1: isHappyWinner = true (Skor > 80 -> Senyum lebar, dua jempol, bintang emas)
+      // Mode 2: isHappyWinner = false (Skor <= 80 -> Senyum hangat, mengepalkan tangan memberi semangat)
+      return `
+        <svg viewBox="0 0 280 260" class="w-56 sm:w-64 h-auto mx-auto drop-shadow-lg animate-float" xmlns="http://www.w3.org/2000/svg">
+          <!-- Lingkaran Latar Pastel Oranye -->
+          <circle cx="140" cy="135" r="105" fill="${isHappyWinner ? '#FFF0E3' : '#FEF3C7'}" stroke="#EE4D2D" stroke-width="4" stroke-dasharray="10 6"/>
+          
+          <!-- Dekorasi Bintang / Hati -->
+          ${isHappyWinner ? `
+            <text x="35" y="65" font-size="26">⭐</text>
+            <text x="220" y="65" font-size="26">🎉</text>
+            <text x="25" y="165" font-size="22">✨</text>
+            <text x="230" y="165" font-size="22">🏆</text>
+          ` : `
+            <text x="35" y="65" font-size="24">💪</text>
+            <text x="220" y="65" font-size="24">🔥</text>
+            <text x="30" y="165" font-size="22">🧡</text>
+            <text x="225" y="165" font-size="22">✨</text>
+          `}
+
+          <!-- Tas Thermal ShopeeFood di Punggung -->
+          <rect x="75" y="135" width="130" height="80" rx="16" fill="#D9381E" stroke="#991B1B" stroke-width="3"/>
+          <rect x="85" y="143" width="110" height="22" rx="6" fill="#FF7337"/>
+
+          <!-- Badan / Jaket Driver ShopeeFood Oranye -->
+          <path d="M82 235 C82 185, 198 185, 198 235 Z" fill="#EE4D2D" stroke="#9A3412" stroke-width="3"/>
+          <!-- Garis Reflektor Abu-abu Terang pada Jaket -->
+          <path d="M95 198 L185 198" stroke="#F8FAFC" stroke-width="5" stroke-linecap="round"/>
+          <path d="M140 185 L140 235" stroke="#1E293B" stroke-width="4"/>
+          <!-- Badge Logo ShopeeFood di Dada Kiri -->
+          <rect x="152" y="205" width="32" height="16" rx="4" fill="#FFFFFF"/>
+          <text x="168" y="216" font-family="Arial, sans-serif" font-size="8" font-weight="bold" fill="#EE4D2D" text-anchor="middle">Food</text>
+
+          <!-- Leher -->
+          <rect x="128" y="158" width="24" height="22" rx="8" fill="#FDBA74"/>
+
+          <!-- Kepala / Wajah Driver -->
+          <circle cx="140" cy="122" r="42" fill="#FED7AA" stroke="#C2410C" stroke-width="2.5"/>
+          <!-- Pipi Merona -->
+          <ellipse cx="115" cy="130" rx="7" ry="4" fill="#FB7185" opacity="0.55"/>
+          <ellipse cx="165" cy="130" rx="7" ry="4" fill="#FB7185" opacity="0.55"/>
+
+          <!-- Mata -->
+          ${isHappyWinner ? `
+            <!-- Mata Bahagia Melengkung -->
+            <path d="M116 116 Q124 107 132 116" fill="none" stroke="#1E293B" stroke-width="3.5" stroke-linecap="round"/>
+            <path d="M148 116 Q156 107 164 116" fill="none" stroke="#1E293B" stroke-width="3.5" stroke-linecap="round"/>
+          ` : `
+            <!-- Mata Ramah Berbinar -->
+            <circle cx="124" cy="116" r="5" fill="#1E293B"/>
+            <circle cx="126" cy="114" r="1.8" fill="#FFFFFF"/>
+            <circle cx="156" cy="116" r="5" fill="#1E293B"/>
+            <circle cx="158" cy="114" r="1.8" fill="#FFFFFF"/>
+          `}
+
+          <!-- Mulut Senyum -->
+          ${isHappyWinner ? `
+            <path d="M123 133 Q140 152 157 133 Z" fill="#FFFFFF" stroke="#1E293B" stroke-width="2.5"/>
+          ` : `
+            <path d="M126 135 Q140 147 154 135" fill="none" stroke="#1E293B" stroke-width="3.2" stroke-linecap="round"/>
+          `}
+
+          <!-- Helm Driver ShopeeFood Oranye -->
+          <path d="M94 115 C94 68, 186 68, 186 115 C172 104, 108 104, 94 115 Z" fill="#EE4D2D" stroke="#9A3412" stroke-width="3"/>
+          <!-- Garis Putih Helm -->
+          <path d="M104 92 Q140 80 176 92" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round"/>
+          <!-- Lingkaran Emblem ShopeeFood di Dahi Helm -->
+          <circle cx="140" cy="84" r="13" fill="#FFFFFF" stroke="#EE4D2D" stroke-width="2"/>
+          <text x="140" y="88" font-family="Arial, sans-serif" font-size="11" font-weight="900" fill="#EE4D2D" text-anchor="middle">SF</text>
+          <!-- Kaca Visor Helm Transparan -->
+          <path d="M98 106 Q140 118 182 106 L178 117 Q140 127 102 117 Z" fill="#38BDF8" opacity="0.35"/>
+
+          <!-- Tangan Kiri & Kanan -->
+          ${isHappyWinner ? `
+            <!-- Dua Jempol Mantap! -->
+            <circle cx="72" cy="188" r="16" fill="#FED7AA" stroke="#C2410C" stroke-width="2.5"/>
+            <rect x="67" y="162" width="10" height="18" rx="5" fill="#FED7AA" stroke="#C2410C" stroke-width="2.5"/>
+            <circle cx="208" cy="188" r="16" fill="#FED7AA" stroke="#C2410C" stroke-width="2.5"/>
+            <rect x="203" y="162" width="10" height="18" rx="5" fill="#FED7AA" stroke="#C2410C" stroke-width="2.5"/>
+          ` : `
+            <!-- Kepalan Tangan Semangat -->
+            <circle cx="75" cy="185" r="16" fill="#FED7AA" stroke="#C2410C" stroke-width="2.5"/>
+            <path d="M66 183 L84 183" stroke="#C2410C" stroke-width="2"/>
+            <circle cx="205" cy="185" r="16" fill="#FED7AA" stroke="#C2410C" stroke-width="2.5"/>
+            <path d="M196 183 L214 183" stroke="#C2410C" stroke-width="2"/>
+          `}
+        </svg>
+      `;
+    }
+
+    function launchConfettiEffect() {
+      const colors = ['#EE4D2D', '#F59E0B', '#10B981', '#3B82F6', '#EC4899', '#8B5CF6'];
+      for (let i = 0; i < 65; i++) {
+        const piece = document.createElement('div');
+        piece.className = 'confetti-piece';
+        piece.style.left = Math.random() * 100 + 'vw';
+        piece.style.width = (Math.random() * 10 + 7) + 'px';
+        piece.style.height = (Math.random() * 10 + 7) + 'px';
+        piece.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+        piece.style.borderRadius = Math.random() > 0.5 ? '50%' : '3px';
+        piece.style.animationDuration = (Math.random() * 2 + 2.2) + 's';
+        piece.style.animationDelay = (Math.random() * 0.6) + 's';
+        document.body.appendChild(piece);
+        setTimeout(() => piece.remove(), 4800);
+      }
+    }
+
+    function submitQuiz(isTimeUp) {
+      // Cek apakah semua soal sudah diisi (jika bukan karena waktu habis)
+      if (!isTimeUp) {
+        const firstUnanswered = userAnswers.findIndex(ans => ans === null);
+        if (firstUnanswered !== -1) {
+          document.getElementById('unansweredAlert').classList.remove('hidden');
+          const targetCard = document.getElementById(`question-card-${firstUnanswered}`);
+          if (targetCard) {
+            targetCard.classList.add('border-amber-500');
+            targetCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+          return;
+        }
+      }
+
+      document.getElementById('unansweredAlert').classList.add('hidden');
+
+      // Hentikan Ujian & Timer
+      isExamActive = false;
+      isExamFinished = true;
+      if (examTimerInterval) clearInterval(examTimerInterval);
+
+      // Buka kembali kunci tab materi
+      const btnMateri = document.getElementById('btnTabMateri');
+      btnMateri.classList.remove('opacity-40', 'cursor-not-allowed');
+      btnMateri.title = "";
+      document.getElementById('examTimerBadge').classList.add('hidden');
+      document.getElementById('examTimerBadge').classList.remove('flex');
+
+      // Hitung Skor (10 Soal x 10 Poin = 100)
+      let correctCount = 0;
+      hotsQuestions.forEach((q, idx) => {
+        if (userAnswers[idx] === q.correct) correctCount++;
+      });
+      const finalScore = correctCount * 10;
+      const isAbove80 = finalScore > 80; // Sesuai permintaan: jika di atas 80 (90 atau 100)
+
+      // Tampilkan Area Hasil
+      document.getElementById('quizActiveArea').classList.add('hidden');
+      document.getElementById('quizResultArea').classList.remove('hidden');
+
+      const banner = document.getElementById('resultBannerCard');
+
+      if (isAbove80) {
+        // EFEK SELAMAT & MANTAP (> 80) + DRIVER SHOPEEFOOD MEMBERI SELAMAT
+        banner.className = "rounded-3xl border-4 border-orange-400 bg-gradient-to-b from-orange-50 via-amber-50 to-white p-6 sm:p-10 shadow-2xl text-center relative overflow-hidden space-y-5";
+        banner.innerHTML = `
+          <div class="inline-flex items-center gap-2 bg-shopeeOrange text-white font-extrabold text-xs sm:text-sm px-5 py-1.5 rounded-full shadow-md uppercase tracking-wider">
+            🛵✨ SHOPEEFOOD SPECIAL APPRECIATION ✨🛵
+          </div>
+
+          <h2 class="text-3xl sm:text-5xl font-extrabold text-shopeeOrange tracking-tight drop-shadow-sm">
+            SELAMAT &amp; MANTAP! 🎉
+          </h2>
+
+          ${getShopeeFoodDriverSVG(true)}
+
+          <!-- Balon Ucapan Driver ShopeeFood -->
+          <div class="max-w-xl mx-auto bg-white border-2 border-orange-300 rounded-2xl p-4 shadow-md relative">
+            <p class="text-sm sm:text-base font-extrabold text-slate-800">
+              “Wuihh, mantap pol! Pesanan nilai <span class="text-shopeeOrange">${finalScore}</span> sudah mendarat mulus buat <span class="text-teal-700">${studentName} (${studentClass})</span>! Kamu paham banget materi Zat Adiktif. Pertahankan prestasimu ya!”
+            </p>
+            <p class="text-xs font-bold text-orange-600 mt-1">— Bang Driver ShopeeFood 🛵🧡</p>
+          </div>
+
+          <div class="flex flex-wrap items-center justify-center gap-4 pt-2">
+            <div class="bg-emerald-600 text-white px-7 py-4 rounded-2xl shadow-lg">
+              <p class="text-xs uppercase font-bold opacity-90">Nilai Akhir Kamu</p>
+              <p class="text-4xl sm:text-5xl font-black">${finalScore}</p>
+            </div>
+            <div class="bg-white border-2 border-slate-200 px-6 py-4 rounded-2xl text-left">
+              <p class="text-xs text-slate-500 font-bold">Nama: <span class="text-slate-800">${studentName}</span></p>
+              <p class="text-xs text-slate-500 font-bold mt-1">Kelas: <span class="text-slate-800">${studentClass}</span></p>
+              <p class="text-xs text-emerald-700 font-extrabold mt-1">Jawaban Benar: ${correctCount} dari 10 Soal</p>
+            </div>
+          </div>
+        `;
+        launchConfettiEffect();
+        playResultSound(true);
+      } else {
+        // EFEK YUKK SEMANGAT DAN COBA LAGI (<= 80) + DRIVER SHOPEEFOOD MEMBERI SEMANGAT
+        banner.className = "rounded-3xl border-4 border-amber-400 bg-gradient-to-b from-amber-50 via-orange-50/60 to-white p-6 sm:p-10 shadow-2xl text-center relative overflow-hidden space-y-5";
+        banner.innerHTML = `
+          <div class="inline-flex items-center gap-2 bg-amber-500 text-white font-extrabold text-xs sm:text-sm px-5 py-1.5 rounded-full shadow-md uppercase tracking-wider">
+            🛵💪 PESAN PENYEMANGAT DRIVER SHOPEEFOOD 💪🛵
+          </div>
+
+          <h2 class="text-3xl sm:text-5xl font-extrabold text-orange-600 tracking-tight drop-shadow-sm">
+            YUKK SEMANGAT DAN COBA LAGI! 🔥
+          </h2>
+
+          ${getShopeeFoodDriverSVG(false)}
+
+          <!-- Balon Ucapan Driver ShopeeFood -->
+          <div class="max-w-xl mx-auto bg-white border-2 border-amber-300 rounded-2xl p-4 shadow-md">
+            <p class="text-sm sm:text-base font-extrabold text-slate-800">
+              “Tetap gaspol jangan menyerah, <span class="text-teal-700">${studentName} (${studentClass})</span>! Nilai kamu <span class="text-orange-600">${finalScore}</span>, sedikit lagi tembus di atas 80. Yuk baca pembahasan di bawah lalu coba lagi, pasti bisa!”
+            </p>
+            <p class="text-xs font-bold text-orange-600 mt-1">— Bang Driver ShopeeFood 🛵🧡</p>
+          </div>
+
+          <div class="flex flex-wrap items-center justify-center gap-4 pt-2">
+            <div class="bg-amber-500 text-white px-7 py-4 rounded-2xl shadow-lg">
+              <p class="text-xs uppercase font-bold opacity-90">Nilai Akhir Kamu</p>
+              <p class="text-4xl sm:text-5xl font-black">${finalScore}</p>
+            </div>
+            <div class="bg-white border-2 border-slate-200 px-6 py-4 rounded-2xl text-left">
+              <p class="text-xs text-slate-500 font-bold">Nama: <span class="text-slate-800">${studentName}</span></p>
+              <p class="text-xs text-slate-500 font-bold mt-1">Kelas: <span class="text-slate-800">${studentClass}</span></p>
+              <p class="text-xs text-amber-700 font-extrabold mt-1">Jawaban Benar: ${correctCount} dari 10 Soal</p>
+            </div>
+          </div>
+
+          <div class="pt-2">
+            <button onclick="resetQuizSystem()" class="px-8 py-3.5 rounded-2xl bg-shopeeOrange hover:bg-orange-600 text-white font-extrabold text-base shadow-lg transition transform hover:scale-105">
+              🔄 Coba Lagi Sekarang
+            </button>
+          </div>
+        `;
+        playResultSound(false);
+      }
+
+      renderReviewSection();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function renderReviewSection() {
+      const letters = ['A', 'B', 'C', 'D'];
+      const container = document.getElementById('reviewContainer');
+
+      container.innerHTML = hotsQuestions.map((q, idx) => {
+        const userAns = userAnswers[idx];
+        const isCorrect = userAns === q.correct;
+        const userText = userAns !== null ? `${letters[userAns]}. ${q.options[userAns]}` : "Tidak dijawab";
+        const correctText = `${letters[q.correct]}. ${q.options[q.correct]}`;
+
+        return `
+          <div class="p-4 rounded-2xl border-2 ${isCorrect ? 'bg-emerald-50/50 border-emerald-200' : 'bg-rose-50/50 border-rose-200'} space-y-2 text-xs sm:text-sm">
+            <div class="flex items-center justify-between">
+              <span class="font-extrabold text-slate-800">Soal #${q.id}</span>
+              <span class="px-3 py-0.5 rounded-full text-xs font-extrabold ${isCorrect ? 'bg-emerald-600 text-white' : 'bg-rose-600 text-white'}">
+                ${isCorrect ? '✅ Benar (+10)' : '❌ Kurang Tepat (0)'}
+              </span>
+            </div>
+            <p class="font-bold text-slate-800">${q.question}</p>
+            <p class="text-slate-700"><strong>Jawabanmu:</strong> <span class="${isCorrect ? 'text-emerald-700 font-bold' : 'text-rose-700 font-bold'}">${userText}</span></p>
+            ${!isCorrect ? `<p class="text-emerald-800"><strong>Kunci Jawaban:</strong> <span class="font-bold">${correctText}</span></p>` : ''}
+            <div class="bg-white/90 p-3 rounded-xl border border-slate-200 text-slate-700">
+              <strong>💡 Pembahasan:</strong> ${q.explanation}
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function resetQuizSystem() {
+      isExamActive = false;
+      isExamFinished = false;
+      if (examTimerInterval) clearInterval(examTimerInterval);
+      stopAlarmSound();
+
+      // Buka kunci materi
+      const btnMateri = document.getElementById('btnTabMateri');
+      btnMateri.classList.remove('opacity-40', 'cursor-not-allowed');
+      btnMateri.title = "";
+      document.getElementById('examTimerBadge').classList.add('hidden');
+      document.getElementById('examTimerBadge').classList.remove('flex');
+
+      // Kembali ke Form Awal Nama & Kelas
+      document.getElementById('quizIntroCard').classList.remove('hidden');
+      document.getElementById('quizActiveArea').classList.add('hidden');
+      document.getElementById('quizResultArea').classList.add('hidden');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // Inisialisasi Halaman Pertama Saat Dimuat
+    window.addEventListener('DOMContentLoaded', () => {
+      renderCurrentSlide();
+    });
+  </script>
+</body>
+</html>
